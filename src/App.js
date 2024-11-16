@@ -77,7 +77,7 @@ function App() {
   }
 
   return (
-    <div className="App w-[90vw] mx-auto border-x-2 border-b-2 rounded-2xl mt-[2%] mb-[2%] border-cyan-500">
+    <div className="App w-[80vw] mx-auto border-x-2 border-b-2 rounded-2xl mt-[2%] mb-[2%] border-cyan-500">
         <div className="background w-full mx-auto px-5 py-5 flex items-center justify-center rounded-t-2xl ">
           <img
             src={logo}
@@ -91,64 +91,64 @@ function App() {
           <form className=" flex flex-wrap gap-5 mt-2 items-center justify-between w-full ">
           <div className="flex flex-col ">
               <label className="">Banas employee ID: <span className="text-red-500">*</span></label>
-              <input ref={BanasEmployeeID} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={BanasEmployeeID} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
             </div>
             <div className="flex flex-col ">
               <label className="">Name: <span className="text-red-500">*</span></label>
-              <input ref={Name} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Name} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
             </div>
             <div className="flex flex-col ">
               <label className="">Designation: <span className="text-red-500">*</span></label>
-              <input ref={Designation} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Designation} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
             </div>
             <div className="flex flex-col ">
               <label className="">Location: <span className="text-red-500">*</span></label>
-              <input ref={Location} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Location} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
             </div>
             {/* <div className="flex flex-col ">
               <label className="">BHRDF: <span className="text-red-500">*</span></label>
-              <input ref={BHRDF} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={BHRDF} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
             </div> */}
             <div className="flex flex-col ">
               <label className="">Taluka: <span className="text-red-500">*</span></label>
-              <input ref={Taluka} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Taluka} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
             </div>
             
             <div className="flex flex-col ">
               <label className="">Aadhar: <span className="text-red-500">*</span></label>
-              <input ref={Aadhar} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Aadhar} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               <div className="flex flex-col ">
               <label className="">Permanent address: <span className="text-red-500">*</span></label>
-              <textarea ref={PermanentAddress} className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <textarea ref={PermanentAddress} className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               <div className="flex flex-col ">
               <label className="">Current address: <span className="text-red-500">*</span></label>
-              <textarea ref={CurrentAddress} className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <textarea ref={CurrentAddress} className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               <div className="flex flex-col ">
               <label className="">Work location: <span className="text-red-500">*</span></label>
-              <input ref={WorkLocation} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={WorkLocation} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               <div className="flex flex-col ">
               <label className="">Package information: <span className="text-red-500">*</span></label>
-              <input ref={PackageInformation} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={PackageInformation} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               <div className="flex flex-col ">
               <label className="">Current Connection : <span className="text-red-500">*</span></label>
-              <input ref={Connection} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Connection} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               <div className="flex flex-col ">
               <label className="">Current Subscription Fee: <span className="text-red-500">*</span></label>
-              <input ref={Money} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Money} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               <div className="flex flex-col ">
               <label className=""> Subscription End Date: <span className="text-red-500">*</span></label>
-              <input ref={Subscription} type="text" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Subscription} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div>
               {/* <div className="flex flex-col ">
               <label className="">Upload Image: <span className="text-red-500">*</span></label>
-              <input ref={Image} type="file" className="border md:w-[40vw] lg:w-[40vw] w-[80vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Image} type="file" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div> */}
             
           </form>
