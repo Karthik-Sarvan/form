@@ -1,6 +1,6 @@
-.background{
-    background: linear-gradient(to bottom, #8bdcf3 0%, #b5e6f3 59%, #c0dbe3 100%);
-    border-radius: 20px 20px 0px 0px;
-    text-align: center;
-    margin-top: 10px;
+.background {
+  background: linear-gradient(to bottom, #8bdcf3 0%, #b5e6f3 59%, #c0dbe3 100%);
+  border-radius: 20px 20px 0px 0px;
+  text-align: center;
+  margin-top: 5px;
 }
