@@ -1,4 +1,5 @@
 import logo from "./logo.png";
+import desh from "./desh.png"
 import "./App.css";
 import { useRef } from "react";
 function App() {
@@ -78,11 +79,16 @@ function App() {
 
   return (
     <div className="App w-[80vw] mx-auto border-x-2 border-b-2 rounded-2xl mt-[2%] mb-[2%] border-cyan-500">
-        <div className="background w-full mx-auto px-5 py-5 flex items-center justify-center rounded-t-2xl ">
+        <div className="background w-full mx-auto px-5 py-5 gap-5 flex items-center justify-center rounded-t-2xl ">
           <img
             src={logo}
             alt="logo"
-            className="md:w-[7vw] lg:w-[7vw] w-[20vw]"
+            className="md:w-[7vw] lg:w-[7vw] w-[15vw]"
+          />
+          <img
+            src={desh}
+            alt="logo"
+            className="md:h-[7vh] lg:h-[10vh] h-[5vh]"
           />
           {/* <h1 className="text-black gap-5 font-bold"> Banaras Dairy BHRDF </h1> */}
         </div>
