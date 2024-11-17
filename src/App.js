@@ -38,7 +38,7 @@ function App() {
   const preferredPlanPricing = useRef();
   const [isSameAddress, setIsSameAddress] = useState(false);
   const [hasFiberConnection, setHasFiberConnection] = useState(true);
-  const [ottused, setottused] = useState(false);
+  const [ottused, setottused] = useState(true);
   const [isNA, setIsNA] = useState(false);
 
   const handleNAChange = (e) => {
@@ -713,7 +713,6 @@ function App() {
               ref={preferredPlan}
               placeholder="Select yes or no"
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="1">1 month</option>
               <option value="3">3 months</option>
               <option value="6">6 months</option>
               <option value="12">12 months</option>
