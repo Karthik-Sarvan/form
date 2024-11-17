@@ -141,7 +141,7 @@ function App() {
   };
 
   return (
-    <div className="App w-[100%] mx-auto   ">
+    <div className="App w-[80%] mx-auto  my-[2%] border-x-2 border-b-2 border-[#c0dce4] rounded-[20px]">
       <div className="background w-[99.5%] mx-auto px-5 py-3 gap-5 flex items-center justify-center  ">
         <img src={logo} alt="logo" className="md:w-[5vw] lg:w-[7vw] w-[15vw]" />
         <img src={desh} alt="logo" className="md:h-[5vh] lg:h-[10vh] h-[5vh]" />
@@ -164,7 +164,7 @@ function App() {
               ref={BanasEmployeeID}
               type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -176,7 +176,7 @@ function App() {
               name="title"
               ref={title}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw]  border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw]  border-gray-500 rounded-sm px-2 py-2">
               <option value="Mr.">Mr.</option>
               <option value="Mrs.">Mrs.</option>
               <option value="Ms.">Ms.</option>
@@ -191,7 +191,7 @@ function App() {
               ref={firstName}
               type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -203,7 +203,7 @@ function App() {
               ref={lastName}
               type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col  ">
@@ -215,7 +215,7 @@ function App() {
               name="gender"
               ref={gender}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
@@ -230,7 +230,7 @@ function App() {
               ref={maritalStatus}
               required
               type="text"
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -242,7 +242,7 @@ function App() {
               ref={email}
               type="email"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -254,12 +254,12 @@ function App() {
               ref={mobileNumber}
               type="number"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           {/* <div className="flex flex-col ">
               <label className="">BHRDF: <span className="text-red-500">*</span></label>
-              <input ref={BHRDF} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2" />
+              <input ref={BHRDF} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2" />
             </div> */}
           {/* <div className="flex flex-col ">
             <label className="">
@@ -268,7 +268,7 @@ function App() {
             <input
               ref={Taluka}
               type="text"
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div> */}
 
@@ -281,7 +281,7 @@ function App() {
               ref={aadhar}
               type="number"
               required
-              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -293,7 +293,7 @@ function App() {
               ref={workLocation}
               type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -306,7 +306,7 @@ function App() {
               type="text"
               defaultValue={"Banas Diary"}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -318,7 +318,7 @@ function App() {
               ref={dob}
               type="date"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -330,7 +330,7 @@ function App() {
             <textarea
               ref={permanentAddress}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
 
@@ -356,7 +356,7 @@ function App() {
             </div>
             <textarea
               ref={currentAddress}
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
 
@@ -369,7 +369,7 @@ function App() {
               ref={state}
               type="text"
               required
-              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -381,7 +381,7 @@ function App() {
               ref={mandal}
               type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -393,7 +393,7 @@ function App() {
               ref={village}
               type="text"
               required
-              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -405,7 +405,7 @@ function App() {
               ref={pincode}
               type="number"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
 
@@ -429,13 +429,13 @@ function App() {
               disabled={isNA}
               required={!isNA}
               ref={mandaliNearAddress}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 isNA ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
           </div>
           <div className="flex flex-col ">
-            <label className="md:w-[30vw] lg:w-[35vw] w-[90vw]">
+            <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               Do you have Fiber Internet Connection / શું તમારી પાસે ફાઈબર
               ઈન્ટરનેટ કનેક્શન છે
               <span className="text-red-500">*</span>
@@ -446,7 +446,7 @@ function App() {
               ref={fiber}
               placeholder="Select yes or no"
               onChange={handleFiberChange}
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
@@ -462,7 +462,7 @@ function App() {
               type="text"
               disabled={!hasFiberConnection}
               required={hasFiberConnection}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
@@ -477,7 +477,7 @@ function App() {
               type="text"
               required={hasFiberConnection}
               disabled={!hasFiberConnection}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
@@ -493,7 +493,7 @@ function App() {
               disabled={!hasFiberConnection}
               required={hasFiberConnection}
               ref={internetPlanValidity}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}>
               <option value="1">January</option>
@@ -520,7 +520,7 @@ function App() {
               type="date"
               disabled={!hasFiberConnection}
               required={hasFiberConnection}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
@@ -533,7 +533,7 @@ function App() {
             <input
               ref={televisionConnectionProvider}
               type="text"
-              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -544,7 +544,7 @@ function App() {
             <input
               ref={televisionPrice}
               type="text"
-              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -556,7 +556,7 @@ function App() {
               name="fiber"
               ref={televisionPlanValidity}
               placeholder="Select yes or no"
-              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="1">January</option>
               <option value="2">February</option>
               <option value="3">March</option>
@@ -579,7 +579,7 @@ function App() {
             <input
               ref={televisionPlanExpiryDate}
               type="date"
-              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -593,7 +593,7 @@ function App() {
               placeholder="Select yes or no"
               onChange={handleottChange}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
@@ -608,13 +608,13 @@ function App() {
               type="text"
               disabled={!ottused}
               required={ottused}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !ottused ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
           </div>
           <div className="flex flex-col ">
-            <label className="md:w-[30vw] lg:w-[35vw] w-[90vw]">
+            <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               Would you like to have Free education content / શું તમે મફત શિક્ષણ
               સામગ્રી મેળવવા માંગો છો
               <span className="text-red-500">*</span>
@@ -624,7 +624,7 @@ function App() {
               required
               ref={freeEducationContent}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
@@ -640,7 +640,7 @@ function App() {
               required
               ref={preferredPlan}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="1">1 month</option>
               <option value="3">3 months</option>
               <option value="6">6 months</option>
@@ -657,7 +657,7 @@ function App() {
               required
               ref={preferredPlanPricing}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="299">299</option>
               <option value="399">399</option>
               <option value="499">499</option>
@@ -669,24 +669,28 @@ function App() {
 
           {/* <div className="flex flex-col ">
               <label className="">Upload Image: <span className="text-red-500">*</span></label>
-              <input ref={Image} type="file" className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Image} type="file" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div> */}
-          <button
-            type="submit"
-            className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md">
-            Submit
-          </button>
+          <div className=" md:w-[30vw] lg:w-[35vw] md:block hidden"></div>
+          <div className="flex md:flex-row lg:flex-row flex-col items-center w-[50%] mx-auto justify-center gap-5 mt-10">
+            <button
+              type="submit"
+              className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="bg-[#5bc0de] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md"
+              onClick={(e) => clearHandler(e)}>
+              Clear
+            </button>
+            <button
+              type="button"
+              className="bg-[#d9534f] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md">
+              Cancel
+            </button>
+          </div>
         </form>
-        <div className="flex md:flex-row lg:flex-row flex-col items-center justify-center gap-5 mt-10">
-          <button
-            className="bg-[#5bc0de] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md"
-            onClick={(e) => clearHandler(e)}>
-            Clear
-          </button>
-          <button className="bg-[#d9534f] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md">
-            Cancel
-          </button>
-        </div>
       </div>
     </div>
   );
