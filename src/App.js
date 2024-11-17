@@ -37,7 +37,7 @@ function App() {
   const preferredPlan = useRef();
   const preferredPlanPricing = useRef();
   const [isSameAddress, setIsSameAddress] = useState(false);
-  const [hasFiberConnection, setHasFiberConnection] = useState(false);
+  const [hasFiberConnection, setHasFiberConnection] = useState(true);
   const [ottused, setottused] = useState(false);
   const [isNA, setIsNA] = useState(false);
 
@@ -138,6 +138,41 @@ function App() {
     freeEducationContent.current.value = "No";
     preferredPlan.current.value = "1";
     preferredPlanPricing.current.value = "299";
+  };
+  const [aadharerr, setAadharerr] = useState(false);
+  const [mobileErr, setMobileErr] = useState(false);
+  const [pincodeerr, setPincodeerr] = useState(false);
+  const [dobErr, setDobErr] = useState(false);
+
+  const validateInputs = () => {
+    const aadharvalue = aadhar.current.value;
+    const mobileValue = mobileNumber.current.value;
+    const pincodevalue = pincode.current.value;
+    const dobValue = dob.current.value;
+
+    if (aadharvalue.length < 12) {
+      setAadharerr(true);
+    } else {
+      setAadharerr(false);
+    }
+
+    if (mobileValue.length < 10) {
+      setMobileErr(true);
+    } else {
+      setMobileErr(false);
+    }
+
+    if (pincodevalue.length < 6) {
+      setPincodeerr(true);
+    } else {
+      setPincodeerr(false);
+    }
+    const dobYear = new Date(dobValue).getFullYear();
+    if (dobYear < 1924 || dobYear > 2024) {
+      setDobErr(true);
+    } else {
+      setDobErr(false);
+    }
   };
 
   return (
@@ -255,7 +290,17 @@ function App() {
               type="number"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                // Prevent more than 10 digits
+                if (e.target.value.length > 10) {
+                  e.target.value = e.target.value.slice(0, 10);
+                }
+                validateInputs();
+              }}
             />
+            {mobileErr && (
+              <span className="text-red-500">Enter valid mobile number</span>
+            )}
           </div>
           {/* <div className="flex flex-col ">
               <label className="">BHRDF: <span className="text-red-500">*</span></label>
@@ -281,9 +326,20 @@ function App() {
               ref={aadhar}
               type="number"
               required
-              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                // Prevent more than 12 digits
+                if (e.target.value.length > 12) {
+                  e.target.value = e.target.value.slice(0, 12);
+                }
+                validateInputs();
+              }}
             />
+            {aadharerr && (
+              <span className="text-red-500">Enter valid aadhar</span>
+            )}
           </div>
+
           <div className="flex flex-col ">
             <label className="">
               Work Location / કાર્ય સ્થાન
@@ -319,7 +375,13 @@ function App() {
               type="date"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={validateInputs}
             />
+            {dobErr && (
+              <span className="text-red-500">
+                Date of Birth must be between 1924 and 2024
+              </span>
+            )}
           </div>
           <div className="flex flex-col ">
             <label>
@@ -406,7 +468,17 @@ function App() {
               type="number"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                // Prevent more than 12 digits
+                if (e.target.value.length > 6) {
+                  e.target.value = e.target.value.slice(0, 6);
+                }
+                validateInputs();
+              }}
             />
+            {pincodeerr && (
+              <span className="text-red-500">Enter valid pincode</span>
+            )}
           </div>
 
           <div className="flex flex-col ">
@@ -447,8 +519,8 @@ function App() {
               placeholder="Select yes or no"
               onChange={handleFiberChange}
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="No">No</option>
               <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
           </div>
 
@@ -474,7 +546,7 @@ function App() {
             </label>
             <input
               ref={internetPrice}
-              type="text"
+              type="number"
               required={hasFiberConnection}
               disabled={!hasFiberConnection}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
@@ -543,7 +615,7 @@ function App() {
             </label>
             <input
               ref={televisionPrice}
-              type="text"
+              type="number"
               className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
@@ -594,8 +666,8 @@ function App() {
               onChange={handleottChange}
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="No">No</option>
               <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
           </div>
           <div className="flex flex-col ">
@@ -625,8 +697,8 @@ function App() {
               ref={freeEducationContent}
               placeholder="Select yes or no"
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="No">No</option>
               <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
           </div>
 
