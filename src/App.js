@@ -155,111 +155,111 @@ function App() {
         <form
           className=" flex flex-wrap gap-5 mt-2 items-center justify-between w-full "
           onSubmit={(e) => submitHandler(e)}>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%] ">
+          <div className="flex flex-col ">
             <label className="">
-              Banas Employee ID
+              Banas Employee ID / બનાસ કર્મચારી ID
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={BanasEmployeeID}
               type="text"
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Title:
+              Title / શીર્ષક
               <span className="text-red-500">*</span>
             </label>
             <select
               name="title"
               ref={title}
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw]  border-gray-500 rounded-sm px-2 py-2">
               <option value="Mr.">Mr.</option>
               <option value="Mrs.">Mrs.</option>
               <option value="Ms.">Ms.</option>
             </select>
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              First Name
+              First Name / પ્રથમ નામ
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={firstName}
               type="text"
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Last Name
+              Last Name / છેલ્લું નામ
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={lastName}
               type="text"
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%] ">
+          <div className="flex flex-col  ">
             <label className="">
-              Gender
+              Gender / જાતિ
               <span className="text-red-500">*</span>
             </label>
             <select
               name="gender"
               ref={gender}
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Marital Status
+              Marital Status / વૈવાહિક સ્થિતિ
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={maritalStatus}
               required
               type="text"
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Email id
+              Email id / ઈમેલ આઈડી
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={email}
               type="email"
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Mobile Number
+              Mobile Number / મોબાઈલ નંબર
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={mobileNumber}
               type="number"
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           {/* <div className="flex flex-col ">
               <label className="">BHRDF: <span className="text-red-500">*</span></label>
-              <input ref={BHRDF} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2" />
+              <input ref={BHRDF} type="text" className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2" />
             </div> */}
           {/* <div className="flex flex-col ">
             <label className="">
@@ -268,37 +268,37 @@ function App() {
             <input
               ref={Taluka}
               type="text"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div> */}
 
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Aadhar no
+              Aadhar no / આધાર નં
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={aadhar}
               type="number"
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Work Location
+              Work Location / કાર્ય સ્થાન
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={workLocation}
               type="text"
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Partner
+              Partner / ભાગીદાર
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -306,37 +306,39 @@ function App() {
               type="text"
               defaultValue={"Banas Diary"}
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Date of Birth
+              Date of Birth / જન્મ તારીખ
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={dob}
               type="date"
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label>
-              Permanent address <span className="text-red-500">*</span>
+              Permanent address / કાયમી સરનામું
+              <span className="text-red-500">*</span>
             </label>
 
             <textarea
               ref={permanentAddress}
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
 
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <div className="flex gap-2 items-center">
               <label>
-                Current address <span className="text-red-500">*</span>
+                Current address / વર્તમાન સરનામું{" "}
+                <span className="text-red-500">*</span>
               </label>
 
               <div className="flex items-center mt-2">
@@ -354,63 +356,63 @@ function App() {
             </div>
             <textarea
               ref={currentAddress}
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
 
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              State
+              State / રાજ્ય
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={state}
               type="text"
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Mandal / Block / Taluka
+              Mandal / Block / Taluka / મંડલ / બ્લોક / તાલુકો
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={mandal}
               type="text"
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Village / Area
+              Village / Area / ગામ / વિસ્તાર
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={village}
               type="text"
               required
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Pincode
+              Pincode / પિનકોડ
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={pincode}
               type="number"
               required
-              className="border border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
 
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <div className="flex gap-2">
               <label className="">
-                Mandali near Address
+                Mandali near Address / સરનામું પાસે મંડળી
                 <span className="text-red-500">*</span>
               </label>
               <label className="flex items-center gap-1 text-sm">
@@ -427,14 +429,15 @@ function App() {
               disabled={isNA}
               required={!isNA}
               ref={mandaliNearAddress}
-              className={`border border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
                 isNA ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
-            <label className="">
-              Do you have Fiber Internet Connection
+          <div className="flex flex-col ">
+            <label className="md:w-[30vw] lg:w-[35vw] w-[90vw]">
+              Do you have Fiber Internet Connection / શું તમારી પાસે ફાઈબર
+              ઈન્ટરનેટ કનેક્શન છે
               <span className="text-red-500">*</span>
             </label>
             <select
@@ -443,15 +446,15 @@ function App() {
               ref={fiber}
               placeholder="Select yes or no"
               onChange={handleFiberChange}
-              className="border border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
           </div>
 
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Internet Connection Provider
+              Internet Connection Provider / ઇન્ટરનેટ કનેક્શન પ્રદાતા
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -459,14 +462,14 @@ function App() {
               type="text"
               disabled={!hasFiberConnection}
               required={hasFiberConnection}
-              className={`border border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Current Internet Price
+              Current Internet Price / વર્તમાન ઈન્ટરનેટ કિંમત
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -474,14 +477,14 @@ function App() {
               type="text"
               required={hasFiberConnection}
               disabled={!hasFiberConnection}
-              className={`border border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Current Plan Validity
+              Current Plan Validity / વર્તમાન પ્લાનની માન્યતા
               <span className="text-red-500">*</span>
             </label>
             <select
@@ -490,7 +493,7 @@ function App() {
               disabled={!hasFiberConnection}
               required={hasFiberConnection}
               ref={internetPlanValidity}
-              className={`border border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}>
               <option value="1">January</option>
@@ -507,9 +510,9 @@ function App() {
               <option value="12">December</option>
             </select>
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Current Plan Expiry Date
+              Current Plan Expiry Date / વર્તમાન યોજના સમાપ્તિ તારીખ
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -517,43 +520,43 @@ function App() {
               type="date"
               disabled={!hasFiberConnection}
               required={hasFiberConnection}
-              className={`border border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Television Connection Provider
+              Television Connection Provider / ટેલિવિઝન કનેક્શન પ્રદાતા
               {/* <span className="text-red-500">*</span> */}
             </label>
             <input
               ref={televisionConnectionProvider}
               type="text"
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Television Connection Price
+              Television Connection Price / ટેલિવિઝન કનેક્શન કિંમત
               {/* <span className="text-red-500">*</span> */}
             </label>
             <input
               ref={televisionPrice}
               type="text"
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Current Plan Validity
+              Current Plan Validity / વર્તમાન પ્લાનની માન્યતા
               {/* <span className="text-red-500">*</span> */}
             </label>
             <select
               name="fiber"
               ref={televisionPlanValidity}
               placeholder="Select yes or no"
-              className="border  border-gray-500 rounded-sm px-2 py-2">
+              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="1">January</option>
               <option value="2">February</option>
               <option value="3">March</option>
@@ -568,20 +571,20 @@ function App() {
               <option value="12">December</option>
             </select>
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Current Plan Expiry Date
+              Current Plan Expiry Date / વર્તમાન યોજના સમાપ્તિ તારીખ
               {/* <span className="text-red-500">*</span> */}
             </label>
             <input
               ref={televisionPlanExpiryDate}
               type="date"
-              className="border  border-gray-500 rounded-sm px-2 py-2"
+              className="border  md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Do you use OTT
+              Do you use OTT / શું તમે OTT નો ઉપયોગ કરો છો
               <span className="text-red-500">*</span>
             </label>
             <select
@@ -590,14 +593,14 @@ function App() {
               placeholder="Select yes or no"
               onChange={handleottChange}
               required
-              className="border border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
           </div>
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              OTT Used
+              OTT Used / OTT વપરાયેલ
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -605,14 +608,15 @@ function App() {
               type="text"
               disabled={!ottused}
               required={ottused}
-              className={`border border-gray-500 rounded-sm px-2 py-2 ${
+              className={`border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !ottused ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
-            <label className="">
-              Would you like to have Free education content
+          <div className="flex flex-col ">
+            <label className="md:w-[30vw] lg:w-[35vw] w-[90vw]">
+              Would you like to have Free education content / શું તમે મફત શિક્ષણ
+              સામગ્રી મેળવવા માંગો છો
               <span className="text-red-500">*</span>
             </label>
             <select
@@ -620,31 +624,32 @@ function App() {
               required
               ref={freeEducationContent}
               placeholder="Select yes or no"
-              className="border border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="No">No</option>
               <option value="Yes">Yes</option>
             </select>
           </div>
 
-          <div className="flex flex-col md:w-[45%] ml-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Preferred Plan <span className="text-red-500">*</span>
+              Preferred Plan / પસંદગીની યોજના{" "}
+              <span className="text-red-500">*</span>
             </label>
             <select
               name="fiber"
               required
               ref={preferredPlan}
               placeholder="Select yes or no"
-              className="border border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="1">1 month</option>
               <option value="3">3 months</option>
               <option value="6">6 months</option>
               <option value="12">12 months</option>
             </select>
           </div>
-          <div className="flex flex-col md:w-[45%] mr-auto w-[90%]">
+          <div className="flex flex-col ">
             <label className="">
-              Preferred Plan Pricing (+GST){" "}
+              Preferred Plan Pricing (+GST) / પ્રિફર્ડ પ્લાન પ્રાઇસીંગ (+GST)
               <span className="text-red-500">*</span>
             </label>
             <select
@@ -652,7 +657,7 @@ function App() {
               required
               ref={preferredPlanPricing}
               placeholder="Select yes or no"
-              className="border border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="299">299</option>
               <option value="399">399</option>
               <option value="499">499</option>
@@ -664,7 +669,7 @@ function App() {
 
           {/* <div className="flex flex-col ">
               <label className="">Upload Image: <span className="text-red-500">*</span></label>
-              <input ref={Image} type="file" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
+              <input ref={Image} type="file" className="border md:w-[30vw] lg:w-[35vw] w-[90vw] border-gray-500 rounded-sm px-5 py-2" />
               </div> */}
           <button
             type="submit"
