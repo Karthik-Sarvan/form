@@ -383,6 +383,8 @@ function App() {
               ref={dob}
               type="date"
               required
+              min="1924-01-01" // Set the minimum date
+              max="2014-12-31" // Set the maximum date
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               onChange={validateInputs}
             />
@@ -684,7 +686,7 @@ function App() {
             <input
               ref={televisionPlanExpiryDate}
               type="date"
-              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
