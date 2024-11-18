@@ -1,4 +1,4 @@
-import logo from "./logo.png";
+import logo from "./logo.jpeg";
 import desh from "./desh.png";
 import "./App.css";
 import { useRef, useState } from "react";
@@ -176,7 +176,7 @@ function App() {
   };
 
   return (
-    <div className="App w-[80%] mx-auto  my-[2%] border-x-2 border-b-2 border-[#c0dce4] rounded-[20px]">
+    <div className="App w-[90%] md:w-[80%] mx-auto  my-[2%] border-x-2 border-b-2 border-[#c0dce4] rounded-[20px]">
       <div className="background w-[99.5%] mx-auto px-5 py-3 gap-5 flex items-center justify-center  ">
         <img src={logo} alt="logo" className="md:w-[5vw] lg:w-[7vw] w-[15vw]" />
         <img src={desh} alt="logo" className="md:h-[5vh] lg:h-[10vh] h-[5vh]" />
@@ -189,7 +189,8 @@ function App() {
         <h1 className="font-medium text-2xl ">CAF Form</h1>
         <form
           className=" flex flex-wrap gap-5 mt-2 items-center justify-between w-full "
-          onSubmit={(e) => submitHandler(e)}>
+          onSubmit={(e) => submitHandler(e)}
+        >
           <div className="flex flex-col ">
             <label className="">
               Banas Employee ID / બનાસ કર્મચારી ID
@@ -211,7 +212,8 @@ function App() {
               name="title"
               ref={title}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw]  border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw]  border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="Mr.">Mr.</option>
               <option value="Mrs.">Mrs.</option>
               <option value="Ms.">Ms.</option>
@@ -250,7 +252,8 @@ function App() {
               name="gender"
               ref={gender}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
@@ -287,11 +290,14 @@ function App() {
             </label>
             <input
               ref={mobileNumber}
-              type="number"
+              type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               onChange={(e) => {
                 // Prevent more than 10 digits
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
                 if (e.target.value.length > 10) {
                   e.target.value = e.target.value.slice(0, 10);
                 }
@@ -324,10 +330,13 @@ function App() {
             </label>
             <input
               ref={aadhar}
-              type="number"
+              type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               onChange={(e) => {
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
                 // Prevent more than 12 digits
                 if (e.target.value.length > 12) {
                   e.target.value = e.target.value.slice(0, 12);
@@ -396,7 +405,7 @@ function App() {
             />
           </div>
 
-          <div className="flex flex-col ">
+          <div className="flex flex-col hidden md:block">
             <div className="flex gap-2 items-center">
               <label>
                 Current address / વર્તમાન સરનામું{" "}
@@ -465,10 +474,13 @@ function App() {
             </label>
             <input
               ref={pincode}
-              type="number"
+              type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               onChange={(e) => {
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
                 // Prevent more than 12 digits
                 if (e.target.value.length > 6) {
                   e.target.value = e.target.value.slice(0, 6);
@@ -506,6 +518,31 @@ function App() {
               }`}
             />
           </div>
+          <div className="flex flex-col block md:hidden">
+            <div className="flex gap-2 items-center">
+              <label>
+                Current address / વર્તમાન સરનામું{" "}
+                <span className="text-red-500">*</span>
+              </label>
+
+              <div className="flex items-center mt-2">
+                <input
+                  type="checkbox"
+                  id="sameAddressCheckbox"
+                  className="mr-2"
+                  checked={isSameAddress}
+                  onChange={handleCheckboxChange}
+                />
+                <label htmlFor="sameAddressCheckbox" className="text-sm">
+                  Same as Permanent Address
+                </label>
+              </div>
+            </div>
+            <textarea
+              ref={currentAddress}
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            />
+          </div>
           <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               Do you have Fiber Internet Connection / શું તમારી પાસે ફાઈબર
@@ -518,7 +555,8 @@ function App() {
               ref={fiber}
               placeholder="Select yes or no"
               onChange={handleFiberChange}
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -546,17 +584,22 @@ function App() {
             </label>
             <input
               ref={internetPrice}
-              type="number"
+              type="text"
               required={hasFiberConnection}
               disabled={!hasFiberConnection}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
+              onChange={(e) => {
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
             />
           </div>
           <div className="flex flex-col ">
             <label className="">
-              Current Plan Validity / વર્તમાન પ્લાનની માન્યતા
+              Current Internet Plan Validity / વર્તમાન ઈન્ટરનેટ પ્લાનની માન્યતા
               <span className="text-red-500">*</span>
             </label>
             <select
@@ -567,19 +610,11 @@ function App() {
               ref={internetPlanValidity}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
-              }`}>
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-              <option value="6">June</option>
-              <option value="7">July</option>
-              <option value="8">August</option>
-              <option value="9">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
+              }`}
+            >
+              <option value="3">3 months</option>
+              <option value="6">6 months</option>
+              <option value="12">12 months</option>
             </select>
           </div>
           <div className="flex flex-col ">
@@ -615,32 +650,30 @@ function App() {
             </label>
             <input
               ref={televisionPrice}
-              type="number"
+              type="text"
               className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
             />
           </div>
           <div className="flex flex-col ">
             <label className="">
-              Current Plan Validity / વર્તમાન પ્લાનની માન્યતા
+              Current Television Plan Validity / વર્તમાન ટેલિવિઝન પ્લાનની
+              માન્યતા
               {/* <span className="text-red-500">*</span> */}
             </label>
             <select
               name="fiber"
               ref={televisionPlanValidity}
               placeholder="Select yes or no"
-              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-              <option value="6">June</option>
-              <option value="7">July</option>
-              <option value="8">August</option>
-              <option value="9">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
+              <option value="3">3 months</option>
+              <option value="6">6 months</option>
+              <option value="12">12 months</option>
             </select>
           </div>
           <div className="flex flex-col ">
@@ -665,7 +698,8 @@ function App() {
               placeholder="Select yes or no"
               onChange={handleottChange}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -696,7 +730,8 @@ function App() {
               required
               ref={freeEducationContent}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -712,7 +747,8 @@ function App() {
               required
               ref={preferredPlan}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="3">3 months</option>
               <option value="6">6 months</option>
               <option value="12">12 months</option>
@@ -728,7 +764,8 @@ function App() {
               required
               ref={preferredPlanPricing}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="299">299</option>
               <option value="399">399</option>
               <option value="499">499</option>
@@ -746,18 +783,21 @@ function App() {
           <div className="flex md:flex-row lg:flex-row flex-col items-center w-[50%] mx-auto justify-center gap-5 mt-10">
             <button
               type="submit"
-              className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md">
+              className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
+            >
               Submit
             </button>
             <button
               type="button"
-              className="bg-[#5bc0de] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md"
-              onClick={(e) => clearHandler(e)}>
+              className="bg-[#5bc0de] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
+              onClick={(e) => clearHandler(e)}
+            >
               Clear
             </button>
             <button
               type="button"
-              className="bg-[#d9534f] md:w-fit lg:w-fit w-full text-white px-10 py-2 text-xl rounded-md">
+              className="bg-[#d9534f] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
+            >
               Cancel
             </button>
           </div>
