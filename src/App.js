@@ -41,6 +41,38 @@ function App() {
   const [ottused, setottused] = useState(true);
   const [isNA, setIsNA] = useState(false);
 
+  const states = [
+    { id: "andhraPradesh", name: "Andhra Pradesh" },
+    { id: "arunachalPradesh", name: "Arunachal Pradesh" },
+    { id: "assam", name: "Assam" },
+    { id: "bihar", name: "Bihar" },
+    { id: "chhattisgarh", name: "Chhattisgarh" },
+    { id: "delhi", name: "Delhi" },
+    { id: "goa", name: "Goa" },
+    { id: "gujarat", name: "Gujarat" },
+    { id: "haryana", name: "Haryana" },
+    { id: "himachalPradesh", name: "Himachal Pradesh" },
+    { id: "jharkhand", name: "Jharkhand" },
+    { id: "karnataka", name: "Karnataka" },
+    { id: "kerala", name: "Kerala" },
+    { id: "madhyaPradesh", name: "Madhya Pradesh" },
+    { id: "maharashtra", name: "Maharashtra" },
+    { id: "manipur", name: "Manipur" },
+    { id: "meghalaya", name: "Meghalaya" },
+    { id: "mizoram", name: "Mizoram" },
+    { id: "nagaland", name: "Nagaland" },
+    { id: "odisha", name: "Odisha" },
+    { id: "punjab", name: "Punjab" },
+    { id: "rajasthan", name: "Rajasthan" },
+    { id: "sikkim", name: "Sikkim" },
+    { id: "tamilNadu", name: "Tamil Nadu" },
+    { id: "telangana", name: "Telangana" },
+    { id: "tripura", name: "Tripura" },
+    { id: "uttarPradesh", name: "Uttar Pradesh" },
+    { id: "uttarakhand", name: "Uttarakhand" },
+    { id: "westBengal", name: "West Bengal" },
+  ];
+
   const handleNAChange = (e) => {
     setIsNA(e.target.checked);
   };
@@ -57,8 +89,16 @@ function App() {
     setIsSameAddress(!isSameAddress);
 
     if (!isSameAddress) {
-      currentAddress.current.value = permanentAddress.current.value;
+      // Combine Permanent Address data into Current Address field
+      currentAddress.current.value = `
+        Permanent Address: ${permanentAddress.current?.value}
+        Village: ${village.current?.value}
+        Mandal: ${mandal.current?.value}
+        State: ${state.current?.value}
+        Pincode: ${pincode.current?.value}
+      `;
     } else {
+      // Clear Current Address if checkbox is unchecked
       currentAddress.current.value = "";
     }
   };
@@ -110,7 +150,7 @@ function App() {
     firstName.current.value = "";
     lastName.current.value = "";
     gender.current.value = "Male";
-    maritalStatus.current.value = "";
+    maritalStatus.current.value = "Married";
     email.current.value = "";
     mobileNumber.current.value = "";
     aadhar.current.value = "";
@@ -229,6 +269,11 @@ function App() {
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
             />
           </div>
           <div className="flex flex-col ">
@@ -241,6 +286,11 @@ function App() {
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
             />
           </div>
           <div className="flex flex-col  ">
@@ -264,12 +314,16 @@ function App() {
               Marital Status / વૈવાહિક સ્થિતિ
               <span className="text-red-500">*</span>
             </label>
-            <input
+            <select
+              name="maritalStatus"
               ref={maritalStatus}
               required
-              type="text"
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            />
+            >
+              <option value="married">Married</option>
+              <option value="unMarried">Un-Married</option>
+              <option value="divorced">Divorced</option>
+            </select>
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -281,6 +335,11 @@ function App() {
               type="email"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (e.target.value.length > 30) {
+                  e.target.value = e.target.value.slice(0, 30);
+                }
+              }}
             />
           </div>
           <div className="flex flex-col ">
@@ -359,6 +418,11 @@ function App() {
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
             />
           </div>
           <div className="flex flex-col ">
@@ -371,7 +435,8 @@ function App() {
               type="text"
               defaultValue={"Banas Diary"}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              disabled
+              className="border md:w-[30vw] cursor-not-allowed lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
           <div className="flex flex-col ">
@@ -403,33 +468,7 @@ function App() {
             <textarea
               ref={permanentAddress}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            />
-          </div>
-
-          <div className="flex flex-col hidden md:block">
-            <div className="flex gap-2 items-center">
-              <label>
-                Current address / વર્તમાન સરનામું{" "}
-                <span className="text-red-500">*</span>
-              </label>
-
-              <div className="flex items-center mt-2">
-                <input
-                  type="checkbox"
-                  id="sameAddressCheckbox"
-                  className="mr-2"
-                  checked={isSameAddress}
-                  onChange={handleCheckboxChange}
-                />
-                <label htmlFor="sameAddressCheckbox" className="text-sm">
-                  Same as Permanent Address
-                </label>
-              </div>
-            </div>
-            <textarea
-              ref={currentAddress}
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              className="border md:w-[30vw] h-14 lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
 
@@ -438,12 +477,19 @@ function App() {
               State / રાજ્ય
               <span className="text-red-500">*</span>
             </label>
-            <input
-              ref={state}
-              type="text"
-              required
+            <select
               className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            />
+              name="state"
+              id="state"
+              ref={state}
+            >
+              <option value="">Select a state</option>
+              {states.map((state) => (
+                <option key={state.id} value={state.id}>
+                  {state.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -520,7 +566,7 @@ function App() {
               }`}
             />
           </div>
-          <div className="flex flex-col block md:hidden">
+          <div className="flex flex-col">
             <div className="flex gap-2 items-center">
               <label>
                 Current address / વર્તમાન સરનામું{" "}
