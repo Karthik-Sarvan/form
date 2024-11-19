@@ -6,7 +6,9 @@ function App() {
   const BanasEmployeeID = useRef();
   const title = useRef();
   const firstName = useRef();
+  const middleName = useRef();
   const lastName = useRef();
+  const designation = useRef();
   const gender = useRef();
   const maritalStatus = useRef();
   const email = useRef();
@@ -24,6 +26,7 @@ function App() {
   const mandaliNearAddress = useRef();
   const fiber = useRef();
   const internetConnectionProvider = useRef();
+  const tvCount = useRef();
   const internetPrice = useRef();
   const internetPlanValidity = useRef();
   const internetPlanExpiryDate = useRef();
@@ -109,7 +112,9 @@ function App() {
       BanasEmployeeID: BanasEmployeeID.current.value,
       Title: title.current.value,
       FirstName: firstName.current.value,
+      middleName: middleName.current.value,
       LastName: lastName.current.value,
+      Designation: designation.current.value,
       Gender: gender.current.value,
       MaritalStatus: maritalStatus.current.value,
       Email: email.current.value,
@@ -148,7 +153,9 @@ function App() {
     BanasEmployeeID.current.value = "";
     title.current.value = "Mr.";
     firstName.current.value = "";
+    middleName.current.value = "";
     lastName.current.value = "";
+    designation.current.value = "";
     gender.current.value = "Male";
     maritalStatus.current.value = "Married";
     email.current.value = "";
@@ -183,17 +190,41 @@ function App() {
   const [mobileErr, setMobileErr] = useState(false);
   const [pincodeerr, setPincodeerr] = useState(false);
   const [dobErr, setDobErr] = useState(false);
+  const [banasEmployeeIDErr, setBanasEmployeeIDErr] = useState(false);
+  const [internetPriceErr, setInternetPriceErr] = useState(false);
+  const [televisionPriceErr, setTelevisionPriceErr] = useState(false);
 
   const validateInputs = () => {
     const aadharvalue = aadhar.current.value;
     const mobileValue = mobileNumber.current.value;
     const pincodevalue = pincode.current.value;
     const dobValue = dob.current.value;
+    const Employee = BanasEmployeeID.current.value;
+    const internetPriceValue = internetPrice.current.value;
+    const televisionPriceValue = televisionPrice.current.value;
 
     if (aadharvalue.length < 12) {
       setAadharerr(true);
     } else {
       setAadharerr(false);
+    }
+
+    if (internetPriceValue > 25000) {
+      setInternetPriceErr(true);
+    } else {
+      setInternetPriceErr(false);
+    }
+
+    if (televisionPriceValue > 25000) {
+      setTelevisionPriceErr(true);
+    } else {
+      setTelevisionPriceErr(false);
+    }
+
+    if (Employee.length < 8) {
+      setBanasEmployeeIDErr(true);
+    } else {
+      setBanasEmployeeIDErr(false);
     }
 
     if (mobileValue.length < 10) {
@@ -241,7 +272,21 @@ function App() {
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (e.target.value.length > 8) {
+                  e.target.value = e.target.value.slice(0, 8);
+                }
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+                validateInputs();
+              }}
             />
+            {banasEmployeeIDErr && (
+              <span className="text-red-500">
+                Enter valid Employee ID number
+              </span>
+            )}
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -266,6 +311,23 @@ function App() {
             </label>
             <input
               ref={firstName}
+              type="text"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
+            />
+          </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Middle Name / મધ્ય નામ
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={middleName}
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
@@ -308,6 +370,23 @@ function App() {
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
+          </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Designation / હોદ્દો
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={designation}
+              type="text"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
+            />
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -623,6 +702,11 @@ function App() {
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
+              onChange={(e) => {
+                if (/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
             />
           </div>
           <div className="flex flex-col ">
@@ -642,8 +726,14 @@ function App() {
                 if (!/^[0-9]*$/.test(e.target.value)) {
                   e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
                 }
+                validateInputs();
               }}
             />
+            {internetPriceErr && (
+              <span className="text-red-500">
+                Enter valid internet price(below 25,000)
+              </span>
+            )}
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -704,8 +794,14 @@ function App() {
                 if (!/^[0-9]*$/.test(e.target.value)) {
                   e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
                 }
+                validateInputs();
               }}
             />
+            {televisionPriceErr && (
+              <span className="text-red-500">
+                Enter valid television price(below 25,000)
+              </span>
+            )}
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -766,6 +862,25 @@ function App() {
                 !ottused ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
+          </div>
+          <div className="flex flex-col">
+            <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
+              How many TVs do you have? / તમારી પાસે કેટલા ટીવી છે?
+              <span className="text-red-500">*</span>
+            </label>
+            <select
+              name="fiber"
+              required
+              ref={tvCount}
+              placeholder="Select yes or no"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
           <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
