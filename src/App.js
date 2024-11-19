@@ -6,6 +6,7 @@ function App() {
   const BanasEmployeeID = useRef();
   const title = useRef();
   const firstName = useRef();
+  const middleName = useRef();
   const lastName = useRef();
   const gender = useRef();
   const maritalStatus = useRef();
@@ -148,6 +149,7 @@ function App() {
     BanasEmployeeID.current.value = "";
     title.current.value = "Mr.";
     firstName.current.value = "";
+    middleName.current.value = "";
     lastName.current.value = "";
     gender.current.value = "Male";
     maritalStatus.current.value = "Married";
@@ -183,17 +185,25 @@ function App() {
   const [mobileErr, setMobileErr] = useState(false);
   const [pincodeerr, setPincodeerr] = useState(false);
   const [dobErr, setDobErr] = useState(false);
+  const [banasEmployeeIDErr, setBanasEmployeeIDErr] = useState(false);
 
   const validateInputs = () => {
     const aadharvalue = aadhar.current.value;
     const mobileValue = mobileNumber.current.value;
     const pincodevalue = pincode.current.value;
     const dobValue = dob.current.value;
+    const Employee = BanasEmployeeID.current.value;
 
     if (aadharvalue.length < 12) {
       setAadharerr(true);
     } else {
       setAadharerr(false);
+    }
+
+    if (Employee.length < 8) {
+      setBanasEmployeeIDErr(true);
+    } else {
+      setBanasEmployeeIDErr(false);
     }
 
     if (mobileValue.length < 10) {
@@ -241,7 +251,19 @@ function App() {
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) =>{
+                if (e.target.value.length > 8) {
+                  e.target.value = e.target.value.slice(0, 8);
+                }
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+                validateInputs();
+              }}
             />
+             {banasEmployeeIDErr && (
+              <span className="text-red-500">Enter valid Employee ID number</span>
+            )}
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -262,6 +284,23 @@ function App() {
           <div className="flex flex-col ">
             <label className="">
               First Name / પ્રથમ નામ
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={firstName}
+              type="text"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+              }}
+            />
+          </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Middle Name / પ્રથમ નામ
               <span className="text-red-500">*</span>
             </label>
             <input
