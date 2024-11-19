@@ -12,7 +12,9 @@ function App() {
   const gender = useRef();
   const maritalStatus = useRef();
   const email = useRef();
+  const officialEmail = useRef();
   const mobileNumber = useRef();
+  const alternateMobileNumber = useRef();
   const aadhar = useRef();
   const workLocation = useRef();
   const partner = useRef();
@@ -43,6 +45,54 @@ function App() {
   const [hasFiberConnection, setHasFiberConnection] = useState(true);
   const [ottused, setottused] = useState(true);
   const [isNA, setIsNA] = useState(false);
+
+
+  const locationData={
+    Gujarat:{
+      areas:{
+        Agthala:["Bio-Gas Project","Agthala"],
+        BadarpuraPlant:["Badarpura Oil Mill","THR Project-Badarpura","Umang Mall"],
+        Dama:["Bio-Gas Plant","Dama"],
+        DH:["Vadgam Veterinary","Tharad  Veterinary"," Thara Veterinary","Suigam Veterinary","Radhanpur Veterinary","Panthavada Veterinary","Lakhani Veterinary","Khimana Veterinary","Dhanera Veterinary", "Deesa Veterinary","Danta Veterinary", "Dama Semen Production Uni","Bhabhar Veterinary","Dantiwada Veterinary","Deodar Veterinary","DH Vet Care-FIP","DH-BNPET","DH-Fodder","Dhima Veterinary","Palanpur Veterinary","Sanchor Veterinary(Raj.)","Santalpur Veterinary","Soneth Veterinary"],
+        Katarwa:["CF Plant Dispatch Katarwa","Cattle Feed Plant Katarwa"]
+      }
+    },
+    UP:{
+      areas:{
+        Faridabad:["Faridabad Dairy Plant(H/N"],
+        Kanpur:["Kanpur Dairy Plant(C-UP)"],
+        Lucknow:["Lucknow Dairy Plant(C-UP)"],
+        MCC:["MCC", "Dhanaura (W-UP)"],
+        MCC:["MCC", "Dibiyapur(C-UP)"],
+        MCC:["MCC", "Ghatampur(C-UP)"],
+        MCC:["MCC", "Joya(W-UP)"],    
+
+      }
+    },
+    Rajasthan:{
+      areas:{
+        Mandar:["Mandar Veterinary(Raj)"],
+        MCC:["MCC", "Bhinmal (RJ)"],
+        MCC:["MCC", "Dholpur(Raj.)"],
+      }
+    },
+    AndhraPradesh:{
+      areas:{
+        MCC:["MCC","Tuni(Andra Pradesh)"],
+      }
+    },
+    Jharkhand:{
+      areas:{
+        MCC:["MCC","Hazaribagh(Jharkhand)"],
+        MCC:["MCC","Mandar(Jharkhand)"]  
+      }
+    },
+    Odisha:{
+      areas:{
+        MCC:["MCC", "Hajipur(Odisha)"]
+      }
+    }
+  }
 
   const states = [
     { id: "andhraPradesh", name: "Andhra Pradesh" },
@@ -193,6 +243,9 @@ function App() {
   const [banasEmployeeIDErr, setBanasEmployeeIDErr] = useState(false);
   const [internetPriceErr, setInternetPriceErr] = useState(false);
   const [televisionPriceErr, setTelevisionPriceErr] = useState(false);
+  const [emailErr, setEmailErr] = useState(false);
+  const [officialEmailErr, setOfficialEmailErr] = useState(false);
+  const [alternateMobileErr, setAlternateMobileErr] = useState(false);
 
   const validateInputs = () => {
     const aadharvalue = aadhar.current.value;
@@ -202,6 +255,9 @@ function App() {
     const Employee = BanasEmployeeID.current.value;
     const internetPriceValue = internetPrice.current.value;
     const televisionPriceValue = televisionPrice.current.value;
+    const emailValue = email.current.value;
+    const OfficialEmailValue= officialEmail.current.value;
+    const alternateMobileValue = alternateMobileNumber.current.value;
 
     if (aadharvalue.length < 12) {
       setAadharerr(true);
@@ -233,6 +289,12 @@ function App() {
       setMobileErr(false);
     }
 
+    if (alternateMobileValue.length < 10) {
+      setAlternateMobileErr(true);
+    } else {
+      setAlternateMobileErr(false);
+    }
+
     if (pincodevalue.length < 6) {
       setPincodeerr(true);
     } else {
@@ -243,6 +305,18 @@ function App() {
       setDobErr(true);
     } else {
       setDobErr(false);
+    }
+
+    if (!emailValue.includes("@") || !emailValue.includes(".")) {
+      setEmailErr(true);
+    } else {
+      setEmailErr(false);
+    }
+
+    if (!OfficialEmailValue.includes("@") || !OfficialEmailValue.includes(".")) {
+      setOfficialEmailErr(true);
+    } else {
+      setOfficialEmailErr(false);
     }
   };
 
@@ -260,8 +334,7 @@ function App() {
         <h1 className="font-medium text-2xl ">CAF Form</h1>
         <form
           className=" flex flex-wrap gap-5 mt-2 items-center justify-between w-full "
-          onSubmit={(e) => submitHandler(e)}
-        >
+          onSubmit={(e) => submitHandler(e)}>
           <div className="flex flex-col ">
             <label className="">
               Banas Employee ID / બનાસ કર્મચારી ID
@@ -297,8 +370,7 @@ function App() {
               name="title"
               ref={title}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw]  border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw]  border-gray-500 rounded-sm px-2 py-2">
               <option value="Mr.">Mr.</option>
               <option value="Mrs.">Mrs.</option>
               <option value="Ms.">Ms.</option>
@@ -321,6 +393,21 @@ function App() {
               }}
             />
           </div>
+          <div className="flex flex-col  ">
+            <label className="">
+              Gender / જાતિ
+              <span className="text-red-500">*</span>
+            </label>
+            <select
+              name="gender"
+              ref={gender}
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
           <div className="flex flex-col ">
             <label className="">
               Middle Name / મધ્ય નામ
@@ -340,6 +427,21 @@ function App() {
           </div>
           <div className="flex flex-col ">
             <label className="">
+              Marital Status / વૈવાહિક સ્થિતિ
+              <span className="text-red-500">*</span>
+            </label>
+            <select
+              name="maritalStatus"
+              ref={maritalStatus}
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              <option value="married">Married</option>
+              <option value="unMarried">Un-Married</option>
+              <option value="divorced">Divorced</option>
+            </select>
+          </div>
+          <div className="flex flex-col ">
+            <label className="">
               Last Name / છેલ્લું નામ
               <span className="text-red-500">*</span>
             </label>
@@ -355,22 +457,7 @@ function App() {
               }}
             />
           </div>
-          <div className="flex flex-col  ">
-            <label className="">
-              Gender / જાતિ
-              <span className="text-red-500">*</span>
-            </label>
-            <select
-              name="gender"
-              ref={gender}
-              required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
+          
           <div className="flex flex-col ">
             <label className="">
               Designation / હોદ્દો
@@ -388,22 +475,7 @@ function App() {
               }}
             />
           </div>
-          <div className="flex flex-col ">
-            <label className="">
-              Marital Status / વૈવાહિક સ્થિતિ
-              <span className="text-red-500">*</span>
-            </label>
-            <select
-              name="maritalStatus"
-              ref={maritalStatus}
-              required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
-              <option value="married">Married</option>
-              <option value="unMarried">Un-Married</option>
-              <option value="divorced">Divorced</option>
-            </select>
-          </div>
+         
           <div className="flex flex-col ">
             <label className="">
               Email id / ઈમેલ આઈડી
@@ -418,9 +490,35 @@ function App() {
                 if (e.target.value.length > 30) {
                   e.target.value = e.target.value.slice(0, 30);
                 }
+                validateInputs();
               }}
             />
+            {emailErr && (
+              <span className="text-red-500">Enter valid email</span>
+            )}
           </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Official Email id / સત્તાવાર ઈ-મેલ આઈડી
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={officialEmail}
+              type="email"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (e.target.value.length > 30) {
+                  e.target.value = e.target.value.slice(0, 30);
+                }
+                validateInputs();
+              }}
+            />
+            {officialEmailErr && (
+              <span className="text-red-500">Enter valid  email</span>
+            )}
+          </div>
+
           <div className="flex flex-col ">
             <label className="">
               Mobile Number / મોબાઈલ નંબર
@@ -443,6 +541,31 @@ function App() {
               }}
             />
             {mobileErr && (
+              <span className="text-red-500">Enter valid mobile number</span>
+            )}
+          </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Alternate Mobile Number / વૈકલ્પિક મોબાઇલ નંબર
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={alternateMobileNumber}
+              type="text"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                // Prevent more than 10 digits
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+                if (e.target.value.length > 10) {
+                  e.target.value = e.target.value.slice(0, 10);
+                }
+                validateInputs();
+              }}
+            />
+            {alternateMobileErr && (
               <span className="text-red-500">Enter valid mobile number</span>
             )}
           </div>
@@ -560,8 +683,7 @@ function App() {
               className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               name="state"
               id="state"
-              ref={state}
-            >
+              ref={state}>
               <option value="">Select a state</option>
               {states.map((state) => (
                 <option key={state.id} value={state.id}>
@@ -682,8 +804,7 @@ function App() {
               ref={fiber}
               placeholder="Select yes or no"
               onChange={handleFiberChange}
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -748,8 +869,7 @@ function App() {
               ref={internetPlanValidity}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
-              }`}
-            >
+              }`}>
               <option value="3">3 months</option>
               <option value="6">6 months</option>
               <option value="12">12 months</option>
@@ -813,8 +933,7 @@ function App() {
               name="fiber"
               ref={televisionPlanValidity}
               placeholder="Select yes or no"
-              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="3">3 months</option>
               <option value="6">6 months</option>
               <option value="12">12 months</option>
@@ -842,8 +961,7 @@ function App() {
               placeholder="Select yes or no"
               onChange={handleottChange}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -873,8 +991,7 @@ function App() {
               required
               ref={tvCount}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -893,8 +1010,7 @@ function App() {
               required
               ref={freeEducationContent}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -910,8 +1026,7 @@ function App() {
               required
               ref={preferredPlan}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="3">3 months</option>
               <option value="6">6 months</option>
               <option value="12">12 months</option>
@@ -927,8 +1042,7 @@ function App() {
               required
               ref={preferredPlanPricing}
               placeholder="Select yes or no"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            >
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
               <option value="299">299</option>
               <option value="399">399</option>
               <option value="499">499</option>
@@ -946,21 +1060,18 @@ function App() {
           <div className="flex md:flex-row lg:flex-row flex-col items-center w-[50%] mx-auto justify-center gap-5 mt-10">
             <button
               type="submit"
-              className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
-            >
+              className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md">
               Submit
             </button>
             <button
               type="button"
               className="bg-[#5bc0de] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
-              onClick={(e) => clearHandler(e)}
-            >
+              onClick={(e) => clearHandler(e)}>
               Clear
             </button>
             <button
               type="button"
-              className="bg-[#d9534f] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
-            >
+              className="bg-[#d9534f] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md">
               Cancel
             </button>
           </div>
