@@ -52,6 +52,15 @@ function App() {
   const [ottused, setottused] = useState(true);
   const [isNA, setIsNA] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [showMiddleName, setShowMiddleName] = useState(false);
+  const [showLastName, setShowLastName] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setShowMiddleName(true);
+      setShowLastName(true);
+    }
+  }, []);
 
   const locationData = {
     Gujarat: {
@@ -198,7 +207,7 @@ function App() {
           "Sarsaul(Vaidik Dairy)",
           "Varanasi(UP)",
         ],
-        MCCMPO: ["Dubeypur(C-UP)", "Meerut(W-UP)"],
+        "MCC/MPO": ["Dubeypur(C-UP)", "Meerut(W-UP)"],
         "MP/SS": ["MPSS (UP)"],
         MPS: [
           "MPS, Goga (W-UP)",
@@ -393,7 +402,7 @@ function App() {
     currentState.current.value = "";
     currentMandal.current.value = "";
     currentPincode.current.value = "";
-   
+
     mandaliNearAddress.current.value = "";
     fiber.current.value = "No";
     internetConnectionProvider.current.value = "";
@@ -465,7 +474,10 @@ function App() {
     const area = e.target.value;
     setSelectedArea(area);
 
-    if (locationData[selectedState] && locationData[selectedState].areas[area]) {
+    if (
+      locationData[selectedState] &&
+      locationData[selectedState].areas[area]
+    ) {
       setSections(locationData[selectedState].areas[area]);
     } else {
       setSections([]);
@@ -557,7 +569,7 @@ function App() {
   };
 
   return (
-    <div className="App w-[90%] md:w-[80%] mx-auto  my-[2%] border-x-2 border-b-2 border-[#c0dce4] rounded-[20px]">
+    <div className="App w-[90%] md:w-[80%] mx-auto my-[2%] border-x-2 border-b-2 border-[#c0dce4] rounded-[20px]">
       <div className="background w-[99.5%] mx-auto px-5 py-3 gap-5 flex items-center justify-center  ">
         <img src={logo} alt="logo" className="md:w-[5vw] lg:w-[7vw] w-[15vw]" />
         <img src={desh} alt="logo" className="md:h-[5vh] lg:h-[10vh] h-[5vh]" />
@@ -622,13 +634,51 @@ function App() {
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              onChange={(e) => {
-                if (/^[0-9]*$/.test(e.target.value)) {
-                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-                }
-              }}
+              // onChange={(e) => {
+              //   if (/^[0-9]*$/.test(e.target.value)) {
+              //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+              //   }
+              // }}
             />
           </div>
+          {showMiddleName && (
+            <div className="flex flex-col md:hidden ">
+              <label className="">
+                Middle Name / મધ્ય નામ
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={middleName}
+                type="text"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                // }  }
+                // }
+              />
+            </div>
+          )}
+          {showLastName && (
+            <div className="flex flex-col md:hidden ">
+              <label className="">
+                Last Name / છેલ્લું નામ
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={lastName}
+                type="text"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                //   }
+                // }}
+              />
+            </div>
+          )}
           <div className="flex flex-col  ">
             <label className="">
               Gender / જાતિ
@@ -644,23 +694,25 @@ function App() {
               <option value="Other">Other</option>
             </select>
           </div>
-          <div className="flex flex-col ">
-            <label className="">
-              Middle Name / મધ્ય નામ
-              <span className="text-red-500">*</span>
-            </label>
-            <input
-              ref={middleName}
-              type="text"
-              required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              onChange={(e) => {
-                if (/^[0-9]*$/.test(e.target.value)) {
-                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-                }
-              }}
-            />
-          </div>
+          {!showMiddleName && (
+            <div className="md:flex md:flex-col hidden ">
+              <label className="">
+                Middle Name / મધ્ય નામ
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={middleName}
+                type="text"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                //   }
+                // }}
+              />
+            </div>
+          )}
           <div className="flex flex-col ">
             <label className="">
               Marital Status / વૈવાહિક સ્થિતિ
@@ -676,23 +728,25 @@ function App() {
               <option value="divorced">Divorced</option>
             </select>
           </div>
-          <div className="flex flex-col ">
-            <label className="">
-              Last Name / છેલ્લું નામ
-              <span className="text-red-500">*</span>
-            </label>
-            <input
-              ref={lastName}
-              type="text"
-              required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              onChange={(e) => {
-                if (/^[0-9]*$/.test(e.target.value)) {
-                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-                }
-              }}
-            />
-          </div>
+          {!showLastName && (
+            <div className=" md:flex md:flex-col hidden ">
+              <label className="">
+                Last Name / છેલ્લું નામ
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={lastName}
+                type="text"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                //   }
+                // }}
+              />
+            </div>
+          )}
 
           <div className="flex flex-col ">
             <label className="">
@@ -852,19 +906,18 @@ function App() {
               <span className="text-red-500">*</span>
             </label>
             <select
-          ref={workLocationState}
-          required
-          className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-          value={selectedState}
-          onChange={handleStateChange}
-        >
-          <option value="">Select State</option>
-          {Object.keys(locationData).map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
+              ref={workLocationState}
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              value={selectedState}
+              onChange={handleStateChange}>
+              <option value="">Select State</option>
+              {Object.keys(locationData).map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -872,20 +925,19 @@ function App() {
               <span className="text-red-500">*</span>
             </label>
             <select
-          ref={workLocationArea}
-          required
-          className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-          value={selectedArea}
-          onChange={handleAreaChange}
-          disabled={!selectedState}
-        >
-          <option value="">Select Area</option>
-          {areas.map((area) => (
-            <option key={area} value={area}>
-              {area}
-            </option>
-          ))}
-        </select>
+              ref={workLocationArea}
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              value={selectedArea}
+              onChange={handleAreaChange}
+              disabled={!selectedState}>
+              <option value="">Select Area</option>
+              {areas.map((area) => (
+                <option key={area} value={area}>
+                  {area}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -893,20 +945,19 @@ function App() {
               <span className="text-red-500">*</span>
             </label>
             <select
-          ref={workLocationSection}
-          required
-          className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-          value={selectedSection}
-          onChange={(e) => setSelectedSection(e.target.value)}
-          disabled={!selectedArea}
-        >
-          <option value="">Select Section</option>
-          {sections.map((section, index) => (
-            <option key={index} value={section}>
-              {section}
-            </option>
-          ))}
-        </select>
+              ref={workLocationSection}
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              value={selectedSection}
+              onChange={(e) => setSelectedSection(e.target.value)}
+              disabled={!selectedArea}>
+              <option value="">Select Section</option>
+              {sections.map((section, index) => (
+                <option key={index} value={section}>
+                  {section}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -1422,7 +1473,6 @@ function App() {
               <label className="">Upload Image: <span className="text-red-500">*</span></label>
               <input ref={Image} type="file" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
               </div> */}
-          <div className=" md:w-[30vw] lg:w-[35vw] md:block hidden"></div>
           <div className="flex md:flex-row lg:flex-row flex-col items-center w-[50%] mx-auto justify-center gap-5 mt-10">
             <button
               type="submit"
