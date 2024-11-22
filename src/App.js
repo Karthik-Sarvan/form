@@ -2,6 +2,7 @@ import logo from "./logo.jpeg";
 import desh from "./desh.png";
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
+import { clear } from "@testing-library/user-event/dist/clear";
 function App() {
   const BanasEmployeeID = useRef();
   const title = useRef();
@@ -323,53 +324,93 @@ function App() {
     }
   };
 
+  const [submissionSuccess, setSubmissionSuccess] = useState(false);
+
   const submitHandler = (e) => {
     e.preventDefault();
     const data = {
-      BanasEmployeeID: BanasEmployeeID.current.value,
-      Title: title.current.value,
-      FirstName: firstName.current.value,
+      employeeId: BanasEmployeeID.current.value,
+      title: title.current.value,
+      firstName: firstName.current.value,
       middleName: middleName.current.value,
-      LastName: lastName.current.value,
-      Designation: designation.current.value,
-      Gender: gender.current.value,
-      MaritalStatus: maritalStatus.current.value,
-      Email: email.current.value,
-      MobileNumber: mobileNumber.current.value,
-      Aadhar: aadhar.current.value,
-      WorkLocationState: workLocationState.current.value,
-      WorkLocationArea: workLocationArea.current.value,
-      WorkLocationSection: workLocationSection.current.value,
-      Partner: partner.current.value,
-      DOB: dob.current.value,
-      PermanentAddress: permanentAddress.current.value,
-      PermanentState: permanentState.current.value,
-      PermanentMandal: permanentMandal.current.value,
-      PermanentVillage: permanentVillage.current.value,
-      PermanentPincode: permanentPincode.current.value,
-
-      CurrentAddress: currentAddress.current.value,
-      CurrentVillage: currentVillage.current.value,
-      CurrentState: currentState.current.value,
-      CurrentMandal: currentMandal.current.value,
-      CurrentPincode: currentPincode.current.value,
-      MandaliNearAddress: mandaliNearAddress.current.value,
-      Fiber: fiber.current.value,
-      InternetConnectionProvider: internetConnectionProvider.current.value,
-      InternetPrice: internetPrice.current.value,
-      InternetPlanValidity: internetPlanValidity.current.value,
-      InternetPlanExpiryDate: internetPlanExpiryDate.current.value,
-      TelevisionConnectionProvider: televisionConnectionProvider.current.value,
-      TelevisionPrice: televisionPrice.current.value,
-      TelevisionPlanValidity: televisionPlanValidity.current.value,
-      TelevisionPlanExpiryDate: televisionPlanExpiryDate.current.value,
-      OTT: ott.current.value,
-      OTTUsed: ottUsed.current.value,
-      FreeEducationContent: freeEducationContent.current.value,
-      PreferredPlan: preferredPlan.current.value,
-      PreferredPlanPricing: preferredPlanPricing.current.value,
+      lastName: lastName.current.value,
+      designation: designation.current.value,
+      gender: gender.current.value,
+      maritalStatus: maritalStatus.current.value,
+      email: email.current.value,
+      officialEmail: officialEmail.current.value,
+      mobileNumber: mobileNumber.current.value,
+      alternateMobileNumber: alternateMobileNumber.current.value,
+      aadharNumber: aadhar.current.value,
+      workLocationState: workLocationState.current.value,
+      workLocationArea: workLocationArea.current.value,
+      workLocationSection: workLocationSection.current.value,
+      partner: partner.current.value,
+      dateOfBirth: dob.current.value,
+      permanentAddress: {
+        address: permanentAddress.current.value,
+        state: permanentState.current.value,
+        mandal: permanentMandal.current.value,
+        village: permanentVillage.current.value,
+        pincode: permanentPincode.current.value,
+        mandaliNearAddress: mandaliNearAddress.current.value,
+      },
+      CurrentAddress: {
+        address: currentAddress.current.value,
+        state: currentState.current.value,
+        mandal: currentMandal.current.value,
+        village: currentVillage.current.value,
+        pincode: currentPincode.current.value,
+        mandaliNearAddress: mandaliNearAddress.current.value,
+      },
+      hasFiberInternet: fiber.current.value,
+      ...(fiber.current.value === "true" && {
+        internetProvider: internetConnectionProvider.current.value,
+        currentInternetPrice: internetPrice.current.value,
+        currentInternetPlanValidity: internetPlanValidity.current.value,
+        currentPlanExpiryDate: internetPlanExpiryDate.current.value,
+      }),
+      televisionProvider: televisionConnectionProvider.current.value,
+      televisionPrice: televisionPrice.current.value,
+      currentTelevisionPlanValidity: televisionPlanValidity.current.value,
+      currentTelevisionPlanExpiryDate: televisionPlanExpiryDate.current.value,
+      usesOTT: ott.current.value,
+      ...(ott.current.value === "true" && { ottUsed: ottUsed.current.value }),
+      numberOfTVs: tvCount.current.value,
+      wantsFreeEducationContent: freeEducationContent.current.value,
+      preferredPlan: preferredPlan.current.value,
+      preferredPlanPricing: preferredPlanPricing.current.value,
     };
-    console.log(data);
+
+    fetch(
+      "https://caf-form-server-production.up.railway.app/api/form/post-form",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log("Success:", responseData);
+
+        // If the response is successful, clear the form
+        clearHandler(e);
+        setSubmissionSuccess(true);
+
+        // Hide success message after 3 seconds
+        setTimeout(() => setSubmissionSuccess(false), 3000);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const clearHandler = (e) => {
@@ -723,9 +764,9 @@ function App() {
               ref={maritalStatus}
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="married">Married</option>
-              <option value="unMarried">Un-Married</option>
-              <option value="divorced">Divorced</option>
+              <option value="Married">Married</option>
+              <option value="Unmarried">Un-Married</option>
+              <option value="Divorced">Divorced</option>
             </select>
           </div>
           {!showLastName && (
@@ -753,7 +794,7 @@ function App() {
               Designation / હોદ્દો
               <span className="text-red-500">*</span>
             </label>
-            <input
+            {/*<input
               ref={designation}
               type="text"
               required
@@ -763,7 +804,52 @@ function App() {
                   e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
                 }
               }}
-            />
+            />*/}
+            <select
+              name="designation"
+              ref={designation}
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
+              <option value="">Designation</option>
+              <option value="Managing Director">Managing Director</option>
+              <option value="Executive Director"> Executive Director</option>
+              <option value="Chief Operating Officer">
+                Chief Operating Officer
+              </option>
+              <option value="Senior General Manager">
+                Senior General Manager
+              </option>
+              <option value="General Manager"> General Manager</option>
+              <option value="Deputy General Manager">
+                {" "}
+                Deputy General Manager
+              </option>
+              <option value="Assistant General Manager">
+                Assistant General Manager
+              </option>
+              <option value="Senior Manager">Senior Manager</option>
+              <option value="Manager"> Manager</option>
+              <option value="Deputy Manager">Deputy Manager </option>
+              <option value="Assistant Manager">Assistant Manager </option>
+              <option value="Senior Executive"> Senior Executive </option>
+              <option value="Executive"> Executive</option>
+              <option value="Assistant Executive"> Assistant Executive </option>
+              <option value="Junior Executive"> Junior Executive </option>
+              <option value="Senior Officer"> Senior Officer</option>
+              <option value="Officer">Officer</option>
+              <option value="Junior Officer"> Junior Officer </option>
+              <option value="Executive Assistant">Executive Assistant</option>
+              <option value="Senior Assistant"> Senior Assistant </option>
+              <option value="Assistant"> Assistant </option>
+              <option value="Junior Assistant"> Junior Assistant </option>
+              <option value="Helper A"> Helper A </option>
+              <option value="Helper B"> Helper B </option>
+              <option value="Helper C"> Helper C </option>
+              <option value="Helper D"> Helper D </option>
+              <option value="Helper E"> Helper E </option>
+              <option value="Conso Helper"> Conso Helper </option>
+              <option value="Talimi  Kamdar"> Talimi Kamdar </option>
+            </select>
           </div>
 
           <div className="flex flex-col ">
@@ -1210,8 +1296,8 @@ function App() {
               placeholder="Select yes or no"
               onChange={handleFiberChange}
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
             </select>
           </div>
 
@@ -1379,8 +1465,8 @@ function App() {
               onChange={handleottChange}
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
             </select>
           </div>
           <div className="flex flex-col ">
@@ -1428,8 +1514,8 @@ function App() {
               ref={freeEducationContent}
               placeholder="Select yes or no"
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
             </select>
           </div>
 
@@ -1479,6 +1565,7 @@ function App() {
               className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md">
               Submit
             </button>
+
             <button
               type="button"
               className="bg-[#5bc0de] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
@@ -1491,6 +1578,9 @@ function App() {
               Cancel
             </button>
           </div>
+          {submissionSuccess && (
+            <p className="text-green-500 mt-2">Form submitted successfully!</p>
+          )}
         </form>
       </div>
     </div>
