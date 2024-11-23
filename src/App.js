@@ -767,6 +767,7 @@ function App() {
               <option value="Married">Married</option>
               <option value="Unmarried">Un-Married</option>
               <option value="Divorced">Divorced</option>
+              <option value="Widowed">Widowed</option>
             </select>
           </div>
           {!showLastName && (
@@ -1521,7 +1522,7 @@ function App() {
 
           <div className="flex flex-col ">
             <label className="">
-              Preferred Plan / પસંદગીની યોજના{" "}
+              Preferred Internet Plan / પસંદગીની યોજના{" "}
               <span className="text-red-500">*</span>
             </label>
             <select
