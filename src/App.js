@@ -12,11 +12,12 @@ function App() {
   const designation = useRef();
   const gender = useRef();
   const maritalStatus = useRef();
-  const email = useRef();
+  const email = useRef(null);
   const officialEmail = useRef();
   const mobileNumber = useRef();
   const alternateMobileNumber = useRef();
   const aadhar = useRef();
+  const workPincode = useRef();
   const workLocationState = useRef();
   const workLocationArea = useRef();
   const workLocationSection = useRef();
@@ -334,19 +335,14 @@ function App() {
       firstName: firstName.current.value,
       middleName: middleName.current.value,
       lastName: lastName.current.value,
-      designation: designation.current.value,
       gender: gender.current.value,
-      maritalStatus: maritalStatus.current.value,
       email: email.current.value,
-      officialEmail: officialEmail.current.value,
       mobileNumber: mobileNumber.current.value,
       alternateMobileNumber: alternateMobileNumber.current.value,
-      aadharNumber: aadhar.current.value,
+      workLocationPincode: workPincode.current.value,
       workLocationState: workLocationState.current.value,
       workLocationArea: workLocationArea.current.value,
       workLocationSection: workLocationSection.current.value,
-      partner: partner.current.value,
-      dateOfBirth: dob.current.value,
       permanentAddress: {
         address: permanentAddress.current.value,
         state: permanentState.current.value,
@@ -361,25 +357,24 @@ function App() {
         mandal: currentMandal.current.value,
         village: currentVillage.current.value,
         pincode: currentPincode.current.value,
-        mandaliNearAddress: mandaliNearAddress.current.value,
       },
       hasFiberInternet: fiber.current.value,
       ...(fiber.current.value === "true" && {
         internetProvider: internetConnectionProvider.current.value,
         currentInternetPrice: internetPrice.current.value,
         currentInternetPlanValidity: internetPlanValidity.current.value,
-        currentPlanExpiryDate: internetPlanExpiryDate.current.value,
+        // currentPlanExpiryDate: internetPlanExpiryDate.current.value,
       }),
-      televisionProvider: televisionConnectionProvider.current.value,
-      televisionPrice: televisionPrice.current.value,
-      currentTelevisionPlanValidity: televisionPlanValidity.current.value,
-      currentTelevisionPlanExpiryDate: televisionPlanExpiryDate.current.value,
-      usesOTT: ott.current.value,
-      ...(ott.current.value === "true" && { ottUsed: ottUsed.current.value }),
-      numberOfTVs: tvCount.current.value,
-      wantsFreeEducationContent: freeEducationContent.current.value,
+      // televisionProvider: televisionConnectionProvider.current.value,
+      // televisionPrice: televisionPrice.current.value,
+      // currentTelevisionPlanValidity: televisionPlanValidity.current.value,
+      // currentTelevisionPlanExpiryDate: televisionPlanExpiryDate.current.value,
+      // usesOTT: ott.current.value,
+      // ...(ott.current.value === "true" && { ottUsed: ottUsed.current.value }),
+      // numberOfTVs: tvCount.current.value,
+      // wantsFreeEducationContent: freeEducationContent.current.value,
       preferredPlan: preferredPlan.current.value,
-      preferredPlanPricing: preferredPlanPricing.current.value,
+      // preferredPlanPricing: preferredPlanPricing.current.value,
     };
 
     fetch(
@@ -426,6 +421,7 @@ function App() {
     email.current.value = "";
     mobileNumber.current.value = "";
     aadhar.current.value = "";
+    workPincode.current.value = "";
     workLocationState.current.value = "";
     workLocationArea.current.value = "";
     workLocationSection.current.value = "";
@@ -464,7 +460,7 @@ function App() {
   const [mobileErr, setMobileErr] = useState(false);
   const [permanentPincodeerr, setPermanentPincodeerr] = useState(false);
   const [currentPincodeerr, setCurrentPincodeerr] = useState(false);
-
+  const [workPincodeerr, setWorkPincodeerr] = useState(false);
   const [dobErr, setDobErr] = useState(false);
   const [banasEmployeeIDErr, setBanasEmployeeIDErr] = useState(false);
   const [internetPriceErr, setInternetPriceErr] = useState(false);
@@ -525,87 +521,228 @@ function App() {
     }
   };
 
-  const validateInputs = () => {
-    const aadharvalue = aadhar.current.value;
-    const mobileValue = mobileNumber.current.value;
-    const permanentPincodevalue = permanentPincode.current.value;
-    const currentPincodevalue = currentPincode.current.value;
+  const fetchPincodeDetails = async (pincode, type) => {
+    try {
+      const response = await fetch(
+        `https://api.postalpincode.in/pincode/${pincode}`
+      );
+      const data = await response.json();
 
-    const dobValue = dob.current.value;
-    const Employee = BanasEmployeeID.current.value;
-    const internetPriceValue = internetPrice.current.value;
-    const televisionPriceValue = televisionPrice.current.value;
-    const emailValue = email.current.value;
-    const OfficialEmailValue = officialEmail.current.value;
-    const alternateMobileValue = alternateMobileNumber.current.value;
+      if (data[0].Status === "Success") {
+        const postOffice = data[0].PostOffice[0];
+        const state = postOffice.State;
+        const block = postOffice.Block;
+        const village = postOffice.Name;
 
-    if (aadharvalue.length < 12) {
-      setAadharerr(true);
-    } else {
-      setAadharerr(false);
+        // Autofill based on type
+        if (type === "permanent") {
+          permanentState.current.value = state;
+          permanentMandal.current.value = block || "Not available";
+          permanentVillage.current.value = village;
+
+          permanentState.current.disabled = true;
+          permanentMandal.current.disabled = true;
+          permanentVillage.current.disabled = true;
+        } else if (type === "current") {
+          currentState.current.value = state;
+          currentMandal.current.value = block || "Not available";
+          currentVillage.current.value = village;
+
+          currentState.current.disabled = true;
+          currentMandal.current.disabled = true;
+          currentVillage.current.disabled = true;
+        } else {
+          workLocationState.current.value = state;
+          workLocationArea.current.value = village;
+          workLocationSection.current.value = block || "Not available";
+
+          workLocationState.current.disabled = true;
+          workLocationArea.current.disabled = true;
+          workLocationSection.current.disabled = true;
+        }
+      } else {
+        console.error("Invalid pincode");
+        if (type === "permanent") setPermanentPincodeerr(true);
+        if (type === "current") setCurrentPincodeerr(true);
+        if (type === "work") setWorkPincodeerr(true);
+      }
+    } catch (error) {
+      console.error("Error fetching pincode details:", error);
+      if (type === "permanent") setPermanentPincodeerr(true);
+      if (type === "current") setCurrentPincodeerr(true);
+      if (type === "work") setWorkPincodeerr(true);
     }
+  };
 
-    if (internetPriceValue > 25000) {
-      setInternetPriceErr(true);
-    } else {
-      setInternetPriceErr(false);
-    }
+  // const validateInputs = () => {
+  //   const aadharvalue = aadhar.current.value;
+  //   const mobileValue = mobileNumber.current.value;
+  //   const permanentPincodevalue = permanentPincode.current.value;
+  //   const currentPincodevalue = currentPincode.current.value;
 
-    if (televisionPriceValue > 25000) {
-      setTelevisionPriceErr(true);
-    } else {
-      setTelevisionPriceErr(false);
-    }
+  //   const dobValue = dob.current.value;
+  //   // const Employee = BanasEmployeeID.current.value;
+  //   const internetPriceValue = internetPrice.current.value;
+  //   const televisionPriceValue = televisionPrice.current.value;
+  //   const emailValue = email.current ? email.current.value : "";
+  //   const OfficialEmailValue = officialEmail.current.value;
+  //   const alternateMobileValue = alternateMobileNumber.current.value;
 
-    if (Employee.length < 8) {
-      setBanasEmployeeIDErr(true);
-    } else {
-      setBanasEmployeeIDErr(false);
-    }
+  //   if (aadharvalue.length < 12) {
+  //     setAadharerr(true);
+  //   } else {
+  //     setAadharerr(false);
+  //   }
 
-    if (mobileValue.length < 10) {
-      setMobileErr(true);
-    } else {
-      setMobileErr(false);
-    }
+  //   if (internetPriceValue > 25000) {
+  //     setInternetPriceErr(true);
+  //   } else {
+  //     setInternetPriceErr(false);
+  //   }
 
-    if (alternateMobileValue.length < 10) {
-      setAlternateMobileErr(true);
-    } else {
-      setAlternateMobileErr(false);
-    }
+  //   if (televisionPriceValue > 25000) {
+  //     setTelevisionPriceErr(true);
+  //   } else {
+  //     setTelevisionPriceErr(false);
+  //   }
 
-    if (permanentPincodevalue.length < 6) {
-      setPermanentPincodeerr(true);
-    } else {
-      setPermanentPincodeerr(false);
-    }
+  //   // if (Employee.length < 8) {
+  //   //   setBanasEmployeeIDErr(true);
+  //   // } else {
+  //   //   setBanasEmployeeIDErr(false);
+  //   // }
 
-    if (currentPincodevalue.length < 6) {
-      setCurrentPincodeerr(true);
-    } else {
-      setCurrentPincodeerr(false);
-    }
-    const dobYear = new Date(dobValue).getFullYear();
-    if (dobYear < 1924 || dobYear > 2024) {
-      setDobErr(true);
-    } else {
-      setDobErr(false);
-    }
+  //   if (mobileValue.length < 10) {
+  //     setMobileErr(true);
+  //   } else {
+  //     setMobileErr(false);
+  //   }
 
-    if (!emailValue.includes("@") || !emailValue.includes(".")) {
-      setEmailErr(true);
-    } else {
-      setEmailErr(false);
-    }
+  //   if (alternateMobileValue.length < 10) {
+  //     setAlternateMobileErr(true);
+  //   } else {
+  //     setAlternateMobileErr(false);
+  //   }
 
-    if (
-      !OfficialEmailValue.includes("@") ||
-      !OfficialEmailValue.includes(".")
-    ) {
-      setOfficialEmailErr(true);
-    } else {
-      setOfficialEmailErr(false);
+  //   if (permanentPincodevalue.length < 6) {
+  //     setPermanentPincodeerr(true);
+  //   } else {
+  //     setPermanentPincodeerr(false);
+  //   }
+
+  //   if (currentPincodevalue.length < 6) {
+  //     setCurrentPincodeerr(true);
+  //   } else {
+  //     setCurrentPincodeerr(false);
+  //   }
+  //   const dobYear = new Date(dobValue).getFullYear();
+  //   if (dobYear < 1924 || dobYear > 2024) {
+  //     setDobErr(true);
+  //   } else {
+  //     setDobErr(false);
+  //   }
+
+  //   if (!emailValue.includes("@") || !emailValue.includes(".")) {
+  //     setEmailErr(true);
+  //   } else {
+  //     setEmailErr(false);
+  //   }
+
+  //   if (
+  //     !OfficialEmailValue.includes("@") ||
+  //     !OfficialEmailValue.includes(".")
+  //   ) {
+  //     setOfficialEmailErr(true);
+  //   } else {
+  //     setOfficialEmailErr(false);
+  //   }
+  // };
+
+  const validateInputs = async () => {
+    try {
+      const aadharValue = aadhar.current ? aadhar.current.value : "";
+      const mobileValue = mobileNumber.current
+        ? mobileNumber.current.value
+        : "";
+      const permanentPincodeValue = permanentPincode.current
+        ? permanentPincode.current.value
+        : "";
+      const currentPincodeValue = currentPincode.current
+        ? currentPincode.current.value
+        : "";
+      const workPincodeValue = workPincode.current
+        ? workPincode.current.value
+        : "";
+      const dobValue = dob.current ? dob.current.value : "";
+      const internetPriceValue = internetPrice.current
+        ? internetPrice.current.value
+        : "";
+      const televisionPriceValue = televisionPrice.current
+        ? televisionPrice.current.value
+        : "";
+      const emailValue = email.current ? email.current.value : "";
+      const officialEmailValue = officialEmail.current
+        ? officialEmail.current.value
+        : "";
+      const alternateMobileValue = alternateMobileNumber.current
+        ? alternateMobileNumber.current.value
+        : "";
+
+      if (aadharValue.length < 12) setAadharerr(true);
+      else setAadharerr(false);
+
+      if (internetPriceValue > 25000) setInternetPriceErr(true);
+      else setInternetPriceErr(false);
+
+      if (televisionPriceValue > 25000) setTelevisionPriceErr(true);
+      else setTelevisionPriceErr(false);
+
+      if (mobileValue.length < 10) setMobileErr(true);
+      else setMobileErr(false);
+
+      if (alternateMobileValue.length < 10) setAlternateMobileErr(true);
+      else setAlternateMobileErr(false);
+
+      if (permanentPincodeValue.length < 6) {
+        setPermanentPincodeerr(true);
+      } else {
+        setPermanentPincodeerr(false);
+        // Call fetchPincodeDetails for Permanent Pincode
+        await fetchPincodeDetails(permanentPincodeValue, "permanent");
+      }
+
+      if (currentPincodeValue.length < 6) {
+        setCurrentPincodeerr(true);
+      } else {
+        setCurrentPincodeerr(false);
+        // Call fetchPincodeDetails for Current Pincode
+        await fetchPincodeDetails(currentPincodeValue, "current");
+      }
+
+      if (workPincodeValue.length < 6) {
+        setWorkPincodeerr(true);
+      } else {
+        setWorkPincodeerr(false);
+        // Call fetchPincodeDetails for Current Pincode
+        await fetchPincodeDetails(workPincodeValue, "work");
+      }
+
+      const dobYear = dobValue ? new Date(dobValue).getFullYear() : null;
+      if (dobYear < 1924 || dobYear > 2024) setDobErr(true);
+      else setDobErr(false);
+
+      if (!emailValue.includes("@") || !emailValue.includes("."))
+        setEmailErr(true);
+      else setEmailErr(false);
+
+      if (
+        !officialEmailValue.includes("@") ||
+        !officialEmailValue.includes(".")
+      )
+        setOfficialEmailErr(true);
+      else setOfficialEmailErr(false);
+    } catch (error) {
+      console.error("Error during validation:", error);
     }
   };
 
@@ -626,24 +763,23 @@ function App() {
           onSubmit={(e) => submitHandler(e)}>
           <div className="flex flex-col ">
             <label className="">
-              Banas Employee ID / બનાસ કર્મચારી ID
+              How are you associated with Banas Diary/ તમે બનાસ ડાયરી સાથે કેવી
+              રીતે જોડાયેલા છો
               <span className="text-red-500">*</span>
             </label>
-            <input
+            <select
               ref={BanasEmployeeID}
-              type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              onChange={(e) => {
-                if (e.target.value.length > 8) {
-                  e.target.value = e.target.value.slice(0, 8);
-                }
-                if (!/^[0-9]*$/.test(e.target.value)) {
-                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-                }
-                validateInputs();
-              }}
-            />
+              // onChange={(e) => {
+              //   validateInputs();
+              // }}
+            >
+              <option value="">None</option>
+              <option value="employee">As an employee</option>
+              <option value="milk-pourer">As a milk pourer</option>
+            </select>
+
             {banasEmployeeIDErr && (
               <span className="text-red-500">
                 Enter valid Employee ID number
@@ -754,7 +890,7 @@ function App() {
               />
             </div>
           )}
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Marital Status / વૈવાહિક સ્થિતિ
               <span className="text-red-500">*</span>
@@ -769,7 +905,7 @@ function App() {
               <option value="Divorced">Divorced</option>
               <option value="Widowed">Widowed</option>
             </select>
-          </div>
+          </div> */}
           {!showLastName && (
             <div className=" md:flex md:flex-col hidden ">
               <label className="">
@@ -790,12 +926,12 @@ function App() {
             </div>
           )}
 
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Designation / હોદ્દો
               <span className="text-red-500">*</span>
             </label>
-            {/*<input
+            <input
               ref={designation}
               type="text"
               required
@@ -805,7 +941,7 @@ function App() {
                   e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
                 }
               }}
-            />*/}
+            />
             <select
               name="designation"
               ref={designation}
@@ -851,11 +987,11 @@ function App() {
               <option value="Conso Helper"> Conso Helper </option>
               <option value="Talimi  Kamdar"> Talimi Kamdar </option>
             </select>
-          </div>
+          </div> */}
 
           <div className="flex flex-col ">
             <label className="">
-              Email id / ઈમેલ આઈડી
+              Email id(optional) / ઈમેલ આઈડી
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -870,11 +1006,11 @@ function App() {
                 validateInputs();
               }}
             />
-            {emailErr && (
+            {/* {emailErr && (
               <span className="text-red-500">Enter valid email</span>
-            )}
+            )} */}
           </div>
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Official Email id / સત્તાવાર ઈ-મેલ આઈડી
               <span className="text-red-500">*</span>
@@ -894,7 +1030,7 @@ function App() {
             {officialEmailErr && (
               <span className="text-red-500">Enter valid email</span>
             )}
-          </div>
+          </div> */}
 
           <div className="flex flex-col ">
             <label className="">
@@ -923,7 +1059,7 @@ function App() {
           </div>
           <div className="flex flex-col ">
             <label className="">
-              Alternate Mobile Number / વૈકલ્પિક મોબાઇલ નંબર
+              Alternate Mobile Number(optional) / વૈકલ્પિક મોબાઇલ નંબર
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -942,9 +1078,9 @@ function App() {
                 validateInputs();
               }}
             />
-            {alternateMobileErr && (
+            {/* {alternateMobileErr && (
               <span className="text-red-500">Enter valid mobile number</span>
-            )}
+            )} */}
           </div>
           {/* <div className="flex flex-col ">
               <label className="">BHRDF: <span className="text-red-500">*</span></label>
@@ -961,7 +1097,7 @@ function App() {
             />
           </div> */}
 
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Aadhar no / આધાર નં
               <span className="text-red-500">*</span>
@@ -985,6 +1121,33 @@ function App() {
             {aadharerr && (
               <span className="text-red-500">Enter valid aadhar</span>
             )}
+          </div> */}
+
+          <div className="flex flex-col ">
+            <label className="">
+              Work Location Pincode / પિનકોડ
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={workPincode}
+              type="text"
+              required
+              disabled={isDisabled}
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+                // Prevent more than 12 digits
+                if (e.target.value.length > 6) {
+                  e.target.value = e.target.value.slice(0, 6);
+                }
+                validateInputs();
+              }}
+            />
+            {workPincodeerr && (
+              <span className="text-red-500">Enter valid pincode</span>
+            )}
           </div>
 
           <div className="flex flex-col ">
@@ -992,61 +1155,41 @@ function App() {
               Work Location(state) / કાર્યસ્થળ (રાજ્ય)
               <span className="text-red-500">*</span>
             </label>
-            <select
+            <input
               ref={workLocationState}
+              type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              value={selectedState}
-              onChange={handleStateChange}>
-              <option value="">Select State</option>
-              {Object.keys(locationData).map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
+              readOnly
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
+            />
           </div>
           <div className="flex flex-col ">
             <label className="">
               Work Location(area) / કાર્યસ્થળ (રાજ્ય)
               <span className="text-red-500">*</span>
             </label>
-            <select
+            <input
               ref={workLocationArea}
+              type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              value={selectedArea}
-              onChange={handleAreaChange}
-              disabled={!selectedState}>
-              <option value="">Select Area</option>
-              {areas.map((area) => (
-                <option key={area} value={area}>
-                  {area}
-                </option>
-              ))}
-            </select>
+              readOnly
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
+            />
           </div>
           <div className="flex flex-col ">
             <label className="">
               Work Location(section) / કાર્યસ્થળ (રાજ્ય)
               <span className="text-red-500">*</span>
             </label>
-            <select
+            <input
               ref={workLocationSection}
+              type="text"
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              value={selectedSection}
-              onChange={(e) => setSelectedSection(e.target.value)}
-              disabled={!selectedArea}>
-              <option value="">Select Section</option>
-              {sections.map((section, index) => (
-                <option key={index} value={section}>
-                  {section}
-                </option>
-              ))}
-            </select>
+              readOnly
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
+            />
           </div>
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Partner / ભાગીદાર
               <span className="text-red-500">*</span>
@@ -1059,8 +1202,8 @@ function App() {
               disabled
               className="border md:w-[30vw] cursor-not-allowed lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="">
               Date of Birth / જન્મ તારીખ
               <span className="text-red-500">*</span>
@@ -1079,7 +1222,7 @@ function App() {
                 Date of Birth must be between 1924 and 2024
               </span>
             )}
-          </div>
+          </div> */}
           <div className="flex flex-col ">
             <label>
               Permanent address / કાયમી સરનામું
@@ -1093,48 +1236,6 @@ function App() {
             />
           </div>
 
-          <div className="flex flex-col ">
-            <label className="">
-              State / રાજ્ય
-              <span className="text-red-500">*</span>
-            </label>
-            <select
-              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              name="state"
-              id="state"
-              ref={permanentState}>
-              <option value="">Select a state</option>
-              {states.map((state) => (
-                <option key={state.id} value={state.id}>
-                  {state.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-col ">
-            <label className="">
-              Mandali / Block / Taluka / મંડલ / બ્લોક / તાલુકો
-              <span className="text-red-500">*</span>
-            </label>
-            <input
-              ref={permanentMandal}
-              type="text"
-              required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            />
-          </div>
-          <div className="flex flex-col ">
-            <label className="">
-              Village / Area / ગામ / વિસ્તાર
-              <span className="text-red-500">*</span>
-            </label>
-            <input
-              ref={permanentVillage}
-              type="text"
-              required
-              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            />
-          </div>
           <div className="flex flex-col ">
             <label className="">
               Pincode / પિનકોડ
@@ -1162,9 +1263,47 @@ function App() {
           </div>
 
           <div className="flex flex-col ">
+            <label className="">
+              State / રાજ્ય
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={permanentState}
+              type="text"
+              required
+              readOnly
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
+            />
+          </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Mandali / Block / Taluka / મંડલ / બ્લોક / તાલુકો
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={permanentMandal}
+              type="text"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            />
+          </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Village / Area / ગામ / વિસ્તાર
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={permanentVillage}
+              type="text"
+              required
+              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            />
+          </div>
+
+          <div className="flex flex-col ">
             <div className="flex gap-2">
               <label className="">
-                Mandali near Address / સરનામું પાસે મંડળી
+                Mandali Name / સરનામું પાસે મંડળી
                 <span className="text-red-500">*</span>
               </label>
               <label className="flex items-center gap-1 text-sm">
@@ -1212,25 +1351,45 @@ function App() {
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
+          <div className="flex flex-col ">
+            <label className="">
+              Pincode / પિનકોડ
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              ref={currentPincode}
+              type="text"
+              required
+              disabled={isDisabled}
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              onChange={(e) => {
+                if (!/^[0-9]*$/.test(e.target.value)) {
+                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                }
+                // Prevent more than 12 digits
+                if (e.target.value.length > 6) {
+                  e.target.value = e.target.value.slice(0, 6);
+                }
+                validateInputs();
+              }}
+            />
+            {currentPincodeerr && (
+              <span className="text-red-500">Enter valid pincode</span>
+            )}
+          </div>
 
           <div className="flex flex-col ">
             <label className="">
               State / રાજ્ય
               <span className="text-red-500">*</span>
             </label>
-            <select
-              className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              name="state"
-              id="state"
-              disabled={isDisabled}
-              ref={currentState}>
-              <option value="">Select a state</option>
-              {states.map((state) => (
-                <option key={state.id} value={state.id}>
-                  {state.name}
-                </option>
-              ))}
-            </select>
+            <input
+              ref={currentState}
+              type="text"
+              required
+              readOnly
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
+            />
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -1258,35 +1417,10 @@ function App() {
               className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
           </div>
-          <div className="flex flex-col ">
-            <label className="">
-              Pincode / પિનકોડ
-              <span className="text-red-500">*</span>
-            </label>
-            <input
-              ref={currentPincode}
-              type="text"
-              required
-              disabled={isDisabled}
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              onChange={(e) => {
-                if (!/^[0-9]*$/.test(e.target.value)) {
-                  e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-                }
-                // Prevent more than 12 digits
-                if (e.target.value.length > 6) {
-                  e.target.value = e.target.value.slice(0, 6);
-                }
-                validateInputs();
-              }}
-            />
-            {currentPincodeerr && (
-              <span className="text-red-500">Enter valid pincode</span>
-            )}
-          </div>
+
           <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-              Do you have Fiber Internet Connection / શું તમારી પાસે ફાઈબર
+              Do you have an existing Internet Connection / શું તમારી પાસે ફાઈબર
               ઈન્ટરનેટ કનેક્શન છે
               <span className="text-red-500">*</span>
             </label>
@@ -1304,13 +1438,14 @@ function App() {
 
           <div className="flex flex-col ">
             <label className="">
-              Internet Connection Provider / ઇન્ટરનેટ કનેક્શન પ્રદાતા
+              How soon do you want a connection / તમે કેટલું જલ્દી કનેક્શન ઈચ્છો
+              છો
               <span className="text-red-500">*</span>
             </label>
             <input
               ref={internetConnectionProvider}
               type="text"
-              disabled={!hasFiberConnection}
+              // disabled={!hasFiberConnection}
               required={hasFiberConnection}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
@@ -1330,8 +1465,8 @@ function App() {
             <input
               ref={internetPrice}
               type="text"
-              required={hasFiberConnection}
-              disabled={!hasFiberConnection}
+              // required={hasFiberConnection}
+              // disabled={!hasFiberConnection}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
@@ -1350,14 +1485,15 @@ function App() {
           </div>
           <div className="flex flex-col ">
             <label className="">
-              Current Internet Plan Validity / વર્તમાન ઈન્ટરનેટ પ્લાનની માન્યતા
+              Current Internet Plan Validity(optional) / વર્તમાન ઈન્ટરનેટ
+              પ્લાનની માન્યતા
               <span className="text-red-500">*</span>
             </label>
             <select
               name="fiber"
               placeholder="Select yes or no"
-              disabled={!hasFiberConnection}
-              required={hasFiberConnection}
+              // disabled={!hasFiberConnection}
+              // required={hasFiberConnection}
               ref={internetPlanValidity}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
@@ -1371,7 +1507,7 @@ function App() {
               <option value="12">12 months</option>
             </select>
           </div>
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Current Plan Expiry Date / વર્તમાન યોજના સમાપ્તિ તારીખ
               <span className="text-red-500">*</span>
@@ -1387,22 +1523,22 @@ function App() {
                 !hasFiberConnection ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="">
               Television Connection Provider / ટેલિવિઝન કનેક્શન પ્રદાતા
-              {/* <span className="text-red-500">*</span> */}
+              <span className="text-red-500">*</span>
             </label>
             <input
               ref={televisionConnectionProvider}
               type="text"
               className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="">
               Television Connection Price / ટેલિવિઝન કનેક્શન કિંમત
-              {/* <span className="text-red-500">*</span> */}
+              <span className="text-red-500">*</span>
             </label>
             <input
               ref={televisionPrice}
@@ -1420,12 +1556,12 @@ function App() {
                 Enter valid television price(below 25,000)
               </span>
             )}
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="">
               Current Television Plan Validity / વર્તમાન ટેલિવિઝન પ્લાનની
               માન્યતા
-              {/* <span className="text-red-500">*</span> */}
+              <span className="text-red-500">*</span>
             </label>
             <select
               name="fiber"
@@ -1440,11 +1576,11 @@ function App() {
               <option value="6">6 months</option>
               <option value="12">12 months</option>
             </select>
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="">
               Current Plan Expiry Date / વર્તમાન યોજના સમાપ્તિ તારીખ
-              {/* <span className="text-red-500">*</span> */}
+              <span className="text-red-500">*</span>
             </label>
             <input
               ref={televisionPlanExpiryDate}
@@ -1453,8 +1589,8 @@ function App() {
               max={dateLimits.maxDate}
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             />
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="">
               Do you use OTT / શું તમે OTT નો ઉપયોગ કરો છો
               <span className="text-red-500">*</span>
@@ -1469,8 +1605,8 @@ function App() {
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="">
               OTT Used / OTT વપરાયેલ
               <span className="text-red-500">*</span>
@@ -1484,8 +1620,8 @@ function App() {
                 !ottused ? "bg-gray-100 cursor-not-allowed" : ""
               }`}
             />
-          </div>
-          <div className="flex flex-col">
+          </div> */}
+          {/* <div className="flex flex-col">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               How many TVs do you have? / તમારી પાસે કેટલા ટીવી છે?
               <span className="text-red-500">*</span>
@@ -1502,8 +1638,8 @@ function App() {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-          </div>
-          <div className="flex flex-col ">
+          </div> */}
+          {/* <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               Would you like to have Free education content / શું તમે મફત શિક્ષણ
               સામગ્રી મેળવવા માંગો છો
@@ -1518,7 +1654,7 @@ function App() {
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
-          </div>
+          </div> */}
 
           <div className="flex flex-col ">
             <label className="">
@@ -1529,14 +1665,28 @@ function App() {
               name="fiber"
               required
               ref={preferredPlan}
-              placeholder="Select yes or no"
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2">
-              <option value="3">3 months</option>
-              <option value="6">6 months</option>
-              <option value="12">12 months</option>
+              <option value="" disabled selected>
+                Select a Plan
+              </option>
+              <option value="20_3">20 Mbps - 3 months: ₹1059</option>
+              <option value="20_6">20 Mbps - 6 months: ₹2118</option>
+              <option value="20_12">20 Mbps - 12 months: ₹4236</option>
+              <option value="50_3">50 Mbps - 3 months: ₹1706</option>
+              <option value="50_6">50 Mbps - 6 months: ₹3333</option>
+              <option value="50_12">50 Mbps - 12 months: ₹7066</option>
+              <option value="75_3">75 Mbps - 3 months: ₹2120</option>
+              <option value="75_6">75 Mbps - 6 months: ₹4241</option>
+              <option value="75_12">75 Mbps - 12 months: ₹8481</option>
+              <option value="100_3">100 Mbps - 3 months: ₹2474</option>
+              <option value="100_6">100 Mbps - 6 months: ₹4949</option>
+              <option value="100_12">100 Mbps - 12 months: ₹9898</option>
+              <option value="150_3">150 Mbps - 3 months: ₹2828</option>
+              <option value="150_6">150 Mbps - 6 months: ₹5657</option>
+              <option value="150_12">150 Mbps - 12 months: ₹11314</option>
             </select>
           </div>
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Preferred Plan Pricing (+GST) / પ્રિફર્ડ પ્લાન પ્રાઇસીંગ (+GST)
               <span className="text-red-500">*</span>
@@ -1554,7 +1704,7 @@ function App() {
               <option value="699">699</option>
               <option value="799">799</option>
             </select>
-          </div>
+          </div> */}
 
           {/* <div className="flex flex-col ">
               <label className="">Upload Image: <span className="text-red-500">*</span></label>
