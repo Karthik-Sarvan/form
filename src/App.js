@@ -43,7 +43,7 @@ function App() {
   const televisionConnectionProvider = useRef();
   const televisionPrice = useRef();
   const wifiExpense = useRef();
-  const wifiRecharge=useRef();
+  const wifiRecharge = useRef();
   const televisionPlanValidity = useRef();
   const televisionPlanExpiryDate = useRef();
   const ott = useRef();
@@ -334,6 +334,7 @@ function App() {
     if (permanentPincodeerr) {
       return alert("Enter valid pincode");
     }
+
     const data = {
       employeeId: BanasEmployeeID.current.value,
       title: title.current.value,
@@ -353,13 +354,13 @@ function App() {
         mandaliNearAddress: mandaliNearAddress.current.value,
       },
       // hasFiberInternet: fiber.current.value,
-        internetProvider: internetConnectionProvider.current.value,
-        wifiExpense:wifiExpense.current.value,
-        wifiRecharge:wifiRecharge.current.value,
-        currentInternetPlanValidity: internetPlanValidity.current.value,
-        // currentInternetPrice: internetPrice.current.value,
-        // currentPlanExpiryDate: internetPlanExpiryDate.current.value,
-      
+      internetProvider: internetConnectionProvider.current.value,
+      wifiExpense: wifiExpense.current.value,
+      wifiRecharge: wifiRecharge.current.value,
+      currentInternetPlanValidity: internetPlanValidity.current.value,
+      // currentInternetPrice: internetPrice.current.value,
+      // currentPlanExpiryDate: internetPlanExpiryDate.current.value,
+
       // televisionProvider: televisionConnectionProvider.current.value,
       // televisionPrice: televisionPrice.current.value,
       // currentTelevisionPlanValidity: televisionPlanValidity.current.value,
@@ -371,7 +372,7 @@ function App() {
       // preferredPlan: preferredPlan.current.value,
       // preferredPlanPricing: preferredPlanPricing.current.value,
     };
-
+    console.log(data);
     fetch(
       "https://caf-form-server-production.up.railway.app/api/form/post-form",
       {
@@ -440,11 +441,11 @@ function App() {
     // fiber.current.value = "true";
     internetConnectionProvider.current.value = "1";
     // internetPrice.current.value = "";
-    wifiExpense.current.value="100-200";
-    wifiRecharge.current.value="1";
+    wifiExpense.current.value = "100-200";
+    wifiRecharge.current.value = "1";
 
     internetPlanValidity.current.value = "3";
-    
+
     // internetPlanExpiryDate.current.value = "";
     // televisionConnectionProvider.current.value = "";
     // televisionPrice.current.value = "";
@@ -764,8 +765,8 @@ function App() {
           onSubmit={(e) => submitHandler(e)}>
           <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-              Your Relatiowith Banas Dairy / બનાસ ડેરી સાથે તમારો સંબંધ રીતે
-              જોડાયેલા છો
+              Your Relationship with Banas Dairy / બનાસ ડેરી સાથે તમારો સંબંધ
+              રીતે જોડાયેલા છો
               <span className="text-red-500">*</span>
             </label>
             <select
