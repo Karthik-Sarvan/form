@@ -780,6 +780,8 @@ function App() {
               <option value="none">None</option>
               <option value="employee">As an employee</option>
               <option value="milk-pourer">As a milk pourer</option>
+              <option value="business">Business</option>
+
             </select>
 
             {banasEmployeeIDErr && (
