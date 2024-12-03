@@ -753,15 +753,15 @@ function App() {
       <div className="background w-[99.5%] mx-auto px-5 py-3 gap-5 flex items-center justify-center  ">
         {/* <img src={logo} alt="logo" className="md:w-[5vw] lg:w-[7vw] w-[15vw]" /> */}
         <img src={desh} alt="logo" className="md:h-[5vh] lg:h-[10vh] h-[5vh]" />
-        {/* <h1 className="text-black gap-5 font-bold"> Banaras Dairy BHRDF </h1> */}
+        {/* <h1 className="gap-5 font-bold text-black"> Banaras Dairy BHRDF </h1> */}
       </div>
-      <p className="font-semibold text-xl text-center mt-2">
+      <p className="mt-2 text-xl font-semibold text-center">
         Please Enter Answer only in English
       </p>
-      <div className=" p-5 w-full">
-        <h1 className="font-medium text-2xl ">CAF Form</h1>
+      <div className="w-full p-5 ">
+        <h1 className="text-2xl font-medium ">CAF Registration Form</h1>
         <form
-          className=" flex flex-wrap gap-5 mt-2 items-center justify-between w-full "
+          className="flex flex-wrap items-center justify-between w-full gap-5 mt-2 "
           onSubmit={(e) => submitHandler(e)}>
           <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
@@ -860,7 +860,7 @@ function App() {
               />
             </div>
           )}
-          {/* <div className="flex flex-col  ">
+          {/* <div className="flex flex-col ">
             <label className="">
               Gender / જાતિ
               <span className="text-red-500">*</span>
@@ -894,7 +894,7 @@ function App() {
             )} */}
           </div>
           {!showMiddleName && (
-            <div className="md:flex md:flex-col hidden ">
+            <div className="hidden md:flex md:flex-col ">
               <label className="">
                 Middle Name / મધ્ય નામ
                 <span className="text-red-500">*</span>
@@ -1019,7 +1019,7 @@ function App() {
           </div>
 
           {!showLastName && (
-            <div className=" md:flex md:flex-col hidden ">
+            <div className="hidden md:flex md:flex-col">
               <label className="">
                 Last Name / છેલ્લું નામ
                 <span className="text-red-500">*</span>
@@ -1327,7 +1327,7 @@ function App() {
           </div>
 
           {/* <div className="flex flex-col">
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <label>
                 Current address / વર્તમાન સરનામું{" "}
                 <span className="text-red-500">*</span>
@@ -1787,7 +1787,7 @@ function App() {
             </button>
           </div>
           {submissionSuccess && (
-            <p className="text-green-500 text-center w-full">
+            <p className="w-full text-center text-green-500">
               Form submitted successfully!
             </p>
           )}
