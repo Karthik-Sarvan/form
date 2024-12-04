@@ -803,6 +803,7 @@ function App() {
               <option value="Mr.">Mr.</option>
               <option value="Mrs.">Mrs.</option>
               <option value="Ms.">Ms.</option>
+              <option value="Dr.">Dr.</option>
             </select>
           </div>
           <div className="flex flex-col ">
@@ -825,13 +826,12 @@ function App() {
           {showMiddleName && (
             <div className="flex flex-col md:hidden ">
               <label className="">
-                Middle Name / મધ્ય નામ
-                <span className="text-red-500">*</span>
+                Middle Name / મધ્ય નામ (Optional)
+                {/* <span className="text-red-500">*</span> */}
               </label>
               <input
                 ref={middleName}
                 type="text"
-                required
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
                 // onChange={(e) => {
                 //   if (/^[0-9]*$/.test(e.target.value)) {
@@ -902,7 +902,6 @@ function App() {
               <input
                 ref={middleName}
                 type="text"
-                required
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
                 // onChange={(e) => {
                 //   if (/^[0-9]*$/.test(e.target.value)) {
