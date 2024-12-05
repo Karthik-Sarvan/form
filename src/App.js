@@ -827,7 +827,6 @@ function App() {
             <div className="flex flex-col md:hidden ">
               <label className="">
                 Middle Name / મધ્ય નામ (Optional)
-                {/* <span className="text-red-500">*</span> */}
               </label>
               <input
                 ref={middleName}
@@ -1440,7 +1439,6 @@ function App() {
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               How often do you recharge your television / તમે તમારા ટેલિવિઝનને
               કેટલી વાર રિચાર્જ કરો છો
-              <span className="text-red-500">*</span>
             </label>
             {/* <input
               ref={internetConnectionProvider}
@@ -1471,7 +1469,6 @@ function App() {
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               If you have wifi what is the current expense / જો તમારી પાસે wifi
               છે તો વર્તમાન ખર્ચ કેટલો છે
-              <span className="text-red-500">*</span>
             </label>
             <select
               ref={wifiExpense}
@@ -1485,7 +1482,6 @@ function App() {
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               How often do you recharge your wifi connection / તમે તમારું વાઇફાઇ
               કનેક્શન કેટલી વાર રિચાર્જ કરો છો
-              <span className="text-red-500">*</span>
             </label>
             <select
               ref={wifiRecharge}
