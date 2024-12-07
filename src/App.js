@@ -777,7 +777,7 @@ function App() {
               //   validateInputs();
               // }}
             >
-              <option value="none">None</option>
+              <option value="none">Other</option>
               <option value="employee">As an employee</option>
               <option value="milk-pourer">As a milk pourer</option>
               <option value="business">Business</option>
@@ -808,7 +808,7 @@ function App() {
           </div>
           <div className="flex flex-col ">
             <label className="">
-              First Name / પ્રથમ નામ
+              Name / પ્નામ
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -826,7 +826,7 @@ function App() {
           {showMiddleName && (
             <div className="flex flex-col md:hidden ">
               <label className="">
-                Middle Name / મધ્ય નામ (Optional)
+                Father Name / પિતા નામ (Optional)
               </label>
               <input
                 ref={middleName}
@@ -843,7 +843,7 @@ function App() {
           {showLastName && (
             <div className="flex flex-col md:hidden ">
               <label className="">
-                Last Name / છેલ્લું નામ
+                SurName / અટક
                 <span className="text-red-500">*</span>
               </label>
               <input
@@ -895,7 +895,7 @@ function App() {
           {!showMiddleName && (
             <div className="hidden md:flex md:flex-col ">
               <label className="">
-                Middle Name / મધ્ય નામ
+                Father Name / પિતા નામ
               </label>
               <input
                 ref={middleName}
@@ -1018,7 +1018,7 @@ function App() {
           {!showLastName && (
             <div className="hidden md:flex md:flex-col">
               <label className="">
-                Last Name / છેલ્લું નામ
+                SurName / અટક
                 <span className="text-red-500">*</span>
               </label>
               <input
@@ -1274,7 +1274,7 @@ function App() {
           </div>
           <div className="flex flex-col ">
             <label className="">
-              Mandali / Block / Taluka / મંડલ / બ્લોક / તાલુકો
+              Block / Taluka /   બ્લોક / તાલુકો
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -1475,6 +1475,7 @@ function App() {
               <option value="100-200">100-200</option>
               <option value="200-500">200-500</option>
               <option value="500-1000">500-1000</option>
+              <option value="above 1000">Above 1000</option>
             </select>
           </div>
           <div className="flex flex-col ">
