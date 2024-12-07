@@ -896,7 +896,6 @@ function App() {
             <div className="hidden md:flex md:flex-col ">
               <label className="">
                 Middle Name / મધ્ય નામ
-                <span className="text-red-500">*</span>
               </label>
               <input
                 ref={middleName}
