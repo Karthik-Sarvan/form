@@ -23,11 +23,11 @@ function App() {
   const workLocationSection = useRef();
   const partner = useRef();
   const dob = useRef();
-  const permanentAddress = useRef();
-  const permanentState = useRef();
-  const permanentMandal = useRef();
-  const permanentVillage = useRef();
-  const permanentPincode = useRef();
+  const permanentAddress = useRef(null);
+  const permanentState = useRef(null);
+  const permanentMandal = useRef(null);
+  const permanentVillage = useRef(null);
+  const permanentPincode = useRef(null);
   const currentAddress = useRef();
   const currentState = useRef();
   const currentMandal = useRef();
@@ -523,58 +523,58 @@ function App() {
     }
   };
 
-  const fetchPincodeDetails = async (pincode, type) => {
-    try {
-      const response = await fetch(
-        `https://api.postalpincode.in/pincode/${pincode}`
-      );
-      const data = await response.json();
+  // const fetchPincodeDetails = async (pincode, type) => {
+  //   try {
+  //     const response = await fetch(
+  //       `https://api.postalpincode.in/pincode/${pincode}`
+  //     );
+  //     const data = await response.json();
 
-      if (data[0].Status === "Success") {
-        const postOffice = data[0].PostOffice[0];
-        const state = postOffice.State;
-        const block = postOffice.Block;
-        const village = postOffice.Name;
+  //     if (data[0].Status === "Success") {
+  //       const postOffice = data[0].PostOffice[0];
+  //       const state = postOffice.State;
+  //       const block = postOffice.Block;
+  //       const village = postOffice.Name;
 
-        // Autofill based on type
-        if (type === "permanent") {
-          permanentState.current.value = state;
-          permanentMandal.current.value = block || "Not available";
-          permanentVillage.current.value = village;
+  //       // Autofill based on type
+  //       if (type === "permanent") {
+  //         permanentState.current.value = state;
+  //         permanentMandal.current.value = block || "Not available";
+  //         permanentVillage.current.value = village;
 
-          permanentState.current.disabled = true;
-          permanentMandal.current.disabled = true;
-          permanentVillage.current.disabled = true;
-        } else if (type === "current") {
-          currentState.current.value = state;
-          currentMandal.current.value = block || "Not available";
-          currentVillage.current.value = village;
+  //         permanentState.current.disabled = true;
+  //         permanentMandal.current.disabled = true;
+  //         permanentVillage.current.disabled = true;
+  //       } else if (type === "current") {
+  //         currentState.current.value = state;
+  //         currentMandal.current.value = block || "Not available";
+  //         currentVillage.current.value = village;
 
-          currentState.current.disabled = true;
-          currentMandal.current.disabled = true;
-          currentVillage.current.disabled = true;
-        } else {
-          workLocationState.current.value = state;
-          workLocationArea.current.value = village;
-          workLocationSection.current.value = block || "Not available";
+  //         currentState.current.disabled = true;
+  //         currentMandal.current.disabled = true;
+  //         currentVillage.current.disabled = true;
+  //       } else {
+  //         workLocationState.current.value = state;
+  //         workLocationArea.current.value = village;
+  //         workLocationSection.current.value = block || "Not available";
 
-          workLocationState.current.disabled = true;
-          workLocationArea.current.disabled = true;
-          workLocationSection.current.disabled = true;
-        }
-      } else {
-        console.error("Invalid pincode");
-        if (type === "permanent") setPermanentPincodeerr(true);
-        if (type === "current") setCurrentPincodeerr(true);
-        if (type === "work") setWorkPincodeerr(true);
-      }
-    } catch (error) {
-      console.error("Error fetching pincode details:", error);
-      if (type === "permanent") setPermanentPincodeerr(true);
-      if (type === "current") setCurrentPincodeerr(true);
-      if (type === "work") setWorkPincodeerr(true);
-    }
-  };
+  //         workLocationState.current.disabled = true;
+  //         workLocationArea.current.disabled = true;
+  //         workLocationSection.current.disabled = true;
+  //       }
+  //     } else {
+  //       console.error("Invalid pincode");
+  //       if (type === "permanent") setPermanentPincodeerr(true);
+  //       if (type === "current") setCurrentPincodeerr(true);
+  //       if (type === "work") setWorkPincodeerr(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching pincode details:", error);
+  //     if (type === "permanent") setPermanentPincodeerr(true);
+  //     if (type === "current") setCurrentPincodeerr(true);
+  //     if (type === "work") setWorkPincodeerr(true);
+  //   }
+  // };
 
   // const validateInputs = () => {
   //   const aadharvalue = aadhar.current.value;
@@ -705,13 +705,13 @@ function App() {
       if (alternateMobileValue.length < 10) setAlternateMobileErr(true);
       else setAlternateMobileErr(false);
 
-      if (permanentPincodeValue.length < 6) {
-        setPermanentPincodeerr(true);
-      } else {
-        setPermanentPincodeerr(false);
-        // Call fetchPincodeDetails for Permanent Pincode
-        await fetchPincodeDetails(permanentPincodeValue, "permanent");
-      }
+      // if (permanentPincodeValue.length < 6) {
+      //   setPermanentPincodeerr(true);
+      // } else {
+      //   setPermanentPincodeerr(false);
+      //   // Call fetchPincodeDetails for Permanent Pincode
+      //   await fetchPincodeDetails(permanentPincodeValue, "permanent");
+      // }
 
       // if (currentPincodeValue.length < 6) {
       //   setCurrentPincodeerr(true);
@@ -1268,13 +1268,12 @@ function App() {
               ref={permanentState}
               type="text"
               required
-              readOnly
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
             />
           </div>
           <div className="flex flex-col ">
             <label className="">
-              Block / Taluka /   બ્લોક / તાલુકો
+              Block / Taluka / બ્લોક / તાલુકો
               <span className="text-red-500">*</span>
             </label>
             <input
