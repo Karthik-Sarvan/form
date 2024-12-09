@@ -28,23 +28,101 @@ function Table() {
       return;
     }
 
-    // Prepare data for the sheet
-    const worksheet = XLSX.utils.json_to_sheet(data); // Convert JSON to worksheet
-    const workbook = XLSX.utils.book_new(); // Create a new workbook
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Table Data"); // Append worksheet to workbook
+    // // Prepare data for the sheet
+    // const worksheet = XLSX.utils.json_to_sheet(data); // Convert JSON to worksheet
+    // const workbook = XLSX.utils.book_new(); // Create a new workbook
+    // XLSX.utils.book_append_sheet(workbook, worksheet, "Table Data"); // Append worksheet to workbook
 
-    // Export the file
-    XLSX.writeFile(workbook, "table_data.xlsx");
+
+    // <td className="text-center border border-gray-600 whitespace-nowrap">{item.title}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.firstName}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.middleName}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.lastName}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.email}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.number}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.alternateMobileNumber}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.location}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.gender}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{new Date(item.createdAt).toLocaleString()}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.mandaliNearAddress}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.pincode}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.mandal}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.state}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.address}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.employeeId}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.internetProvider}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.wifiExpense}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.wifiRecharge}</td>
+    //               <td className="text-center border border-gray-600 whitespace-nowrap">{item.currentInternetPlanValidity}</td>
+    //exporting likr this
+    const formattedData = data.map(item => ({
+        Title: item.title,
+        FirstName: item.firstName,
+        MiddleName: item.middleName,
+        LastName: item.lastName,
+        Email: item.email,
+        Phone: item.number,
+        AlternatePhone: item.alternateMobileNumber,
+        Location: item.location,
+        Gender: item.gender,
+        CreatedAt: new Date(item.createdAt).toLocaleString(),
+        MandaliNearAddress: item.permanentAddress.mandaliNearAddress,
+        Pincode: item.permanentAddress.pincode,
+        Mandal: item.permanentAddress.mandal,
+        State: item.permanentAddress.state,
+        FullAddress: item.permanentAddress.address,
+        EmployeeID: item.employeeId,
+        InternetProvider: item.internetProvider,
+        WifiExpense: item.wifiExpense,
+        WifiRecharge: item.wifiRecharge,
+        PlanValidity: item.currentInternetPlanValidity
+    }));
+    const worksheet = XLSX.utils.json_to_sheet(formattedData); // Convert JSON data to a worksheet
+const workbook = XLSX.utils.book_new(); // Create a new workbook
+XLSX.utils.book_append_sheet(workbook, worksheet, "Table Data"); // Append the worksheet to the workbook
+
+// Export the file
+XLSX.writeFile(workbook, "table_data.xlsx");
+    // const worksheet = XLSX.utils.json_to_sheet(data, {
+    //   header: [
+    //     "title",
+    //     "firstName",
+    //     "middleName",
+    //     "lastName",
+    //     "email",
+    //     "number",
+    //     "alternateMobileNumber",
+    //     "location",
+    //     "gender",
+    //     "createdAt",
+    //     "permanentAddress.mandaliNearAddress",
+    //     "permanentAddress.pincode",
+    //     "permanentAddress.mandal",
+    //     "permanentAddress.state",
+    //     "permanentAddress.address",
+    //     "employeeId",
+    //     "internetProvider",
+    //     "wifiExpense",
+    //     "wifiRecharge",
+    //     "currentInternetPlanValidity"
+    //       ]
+    //     });
+
+    //     const workbook = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(workbook, worksheet, "Table Data");
+
+    // // Export the file
+    // XLSX.writeFile(workbook, "table_data.xlsx");
   };
 
   return (
     <>
       <div className="w-full px-5 py-5 flex gap-5">
-        <p className="mb-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">number of People added : {data.length} </p>
-        {/* <p className="mb-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">number of People added : {data.length} </p> */}
+        <p className="mb-4 bg-green-500 text-white px-4 py-2 whitespace-nowrap rounded hover:bg-green-600">number of People added : {data.length} </p>
+        {/* <p className="mb-4 bg-green-500 text-white px-4 py-2 whitespace-nowrap rounded hover:bg-green-600">number of People added : {data.length} </p> */}
       <button
         onClick={exportToExcel}
-        className="mb-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        className="mb-4 bg-blue-500 text-white px-4 py-2 whitespace-nowrap rounded hover:bg-blue-600"
       >
         Export to Excel
       </button>
@@ -53,17 +131,29 @@ function Table() {
         <p>Loading data...</p>
       ) : (
         <div className="w-[90vw] h-[80vh] overflow-x-scroll mx-auto">
-            <table className="min-w-full bg-white px-5 py-5 ml-10 ">
+            <table className="min-w-full bg-white   ">
           <thead className="rounded-xl">
             <tr className="rounded-xl">
-              <th className="border border-gray-600 px-5">First Name</th>
-              <th className="border border-gray-600 px-5">Middle Name</th>
-              <th className="border border-gray-600 px-5">Last Name</th>
-              <th className="border border-gray-600 px-5">Email</th>
-              <th className="border border-gray-600 px-5">Number</th>
-              <th className="border border-gray-600 px-5">Location</th>
-              <th className="border border-gray-600 px-5">Gender</th>
-              <th className="border border-gray-600 px-5">Created At</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">title</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">First Name</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Middle Name</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Last Name</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Email</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Number</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Alternate Mobile Number</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Location</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Gender</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Created At</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Mandal Near Address</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Pin code</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Mandal</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">State</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Address</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Employee ID</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Internet Provider</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Wifi Expense</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Wifi Recharge</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">Current Internet Plan Validity</th>
             </tr>
           </thead>
           <tbody className="px-5 py-5 border border-gray-600">
@@ -74,14 +164,29 @@ function Table() {
             ) : (
               data.map((item, index) => (
                 <tr key={index}>
-                  <td className="text-center border border-gray-600">{item.firstName}</td>
-                  <td className="text-center border border-gray-600">{item.middleName}</td>
-                  <td className="text-center border border-gray-600">{item.lastName}</td>
-                  <td className="text-center border border-gray-600">{item.email}</td>
-                  <td className="text-center border border-gray-600">{item.number}</td>
-                  <td className="text-center border border-gray-600">{item.location}</td>
-                  <td className="text-center border border-gray-600">{item.gender}</td>
-                  <td className="text-center border border-gray-600">{new Date(item.createdAt).toLocaleString()}</td>
+                    
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.title}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.firstName}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.middleName}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.lastName}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.email}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.number}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.alternateMobileNumber}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.location}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.gender}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{new Date(item.createdAt).toLocaleString()}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.mandaliNearAddress}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.pincode}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.mandal}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.state}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.address}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.employeeId}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.internetProvider}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.wifiExpense}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.wifiRecharge}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.currentInternetPlanValidity}</td>
+
+
                 </tr>
               ))
             )}
