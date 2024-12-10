@@ -61,9 +61,9 @@ function Table() {
         MiddleName: item.middleName,
         LastName: item.lastName,
         Email: item.email,
-        Phone: item.number,
+        Phone: item.mobileNumber,
         AlternatePhone: item.alternateMobileNumber,
-        Location: item.location,
+        Location: item.permanentAddress.address,
         Gender: item.gender,
         CreatedAt: new Date(item.createdAt).toLocaleString(),
         MandaliNearAddress: item.permanentAddress.mandaliNearAddress,
@@ -170,9 +170,9 @@ XLSX.writeFile(workbook, "table_data.xlsx");
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.middleName}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.lastName}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.email}</td>
-                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.number}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.mobileNumber}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.alternateMobileNumber}</td>
-                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.location}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.address}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.gender}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{new Date(item.createdAt).toLocaleString()}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.mandaliNearAddress}</td>
