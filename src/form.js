@@ -387,11 +387,13 @@ function Form() {
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
+            alert("Error in form submission");
           }
           return response.json();
         })
         .then((responseData) => {
           console.log("Success:", responseData);
+          alert("Form submitted successfully");
   
           // If the response is successful, clear the form
           clearHandler(e);
@@ -1267,6 +1269,7 @@ function Form() {
               </label>
               <input
                 ref={permanentState}
+                defaultValue="Gujarat"
                 type="text"
                 required
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
