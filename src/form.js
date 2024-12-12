@@ -394,18 +394,20 @@ function Form() {
             console.log(response);
             throw new Error(`HTTP error! status: ${response.status}`);
           } 
-          return response.json();
-        })
-        .then((responseData) => {
-          console.log("Success:", responseData);
-          alert("Form submitted successfully");
-  
-          // If the response is successful, clear the form
+          
+          console.log("Success:", response);
+          if(response.ok) {
+           // If the response is successful, clear the form
+           alert("Form submitted successfully");
           clearHandler(e);
           setSubmissionSuccess(true);
-  
+          
           // Hide success message after 3 seconds
           setTimeout(() => setSubmissionSuccess(false), 3000);
+          return response.json();
+          }
+          
+  
         })
         .catch((error) => {
           console.error("Error:", error);

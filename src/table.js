@@ -69,6 +69,7 @@ function Table() {
         MandaliNearAddress: item.permanentAddress.mandaliNearAddress,
         Pincode: item.permanentAddress.pincode,
         Mandal: item.permanentAddress.mandal,
+        district: item.permanentAddress.district,
         State: item.permanentAddress.state,
         FullAddress: item.permanentAddress.address,
         EmployeeID: item.employeeId,
@@ -119,6 +120,7 @@ XLSX.writeFile(workbook, "table_data.xlsx");
     <>
       <div className="w-full px-5 py-5 flex gap-5">
         <p className="mb-4 bg-green-500 text-white px-4 py-2 whitespace-nowrap rounded hover:bg-green-600">number of People added : {data.length} </p>
+        <p className="mb-4 bg-green-500 text-white px-4 py-2 whitespace-nowrap rounded hover:bg-green-600">number of different Mandals : </p>
         {/* <p className="mb-4 bg-green-500 text-white px-4 py-2 whitespace-nowrap rounded hover:bg-green-600">number of People added : {data.length} </p> */}
       <button
         onClick={exportToExcel}
@@ -126,6 +128,7 @@ XLSX.writeFile(workbook, "table_data.xlsx");
       >
         Export to Excel
       </button>
+
         </div>
       {loading ? (
         <p>Loading data...</p>
@@ -149,7 +152,11 @@ XLSX.writeFile(workbook, "table_data.xlsx");
               <th className="border border-gray-600 px-5 whitespace-nowrap">Mandal</th>
               <th className="border border-gray-600 px-5 whitespace-nowrap">State</th>
               <th className="border border-gray-600 px-5 whitespace-nowrap">Address</th>
-              <th className="border border-gray-600 px-5 whitespace-nowrap">Employee ID</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">District</th>
+              <th className="border border-gray-600 px-5 whitespace-nowrap">
+                
+                
+              </th>
               <th className="border border-gray-600 px-5 whitespace-nowrap">Internet Provider</th>
               <th className="border border-gray-600 px-5 whitespace-nowrap">Wifi Expense</th>
               <th className="border border-gray-600 px-5 whitespace-nowrap">Wifi Recharge</th>
@@ -166,9 +173,9 @@ XLSX.writeFile(workbook, "table_data.xlsx");
                 <tr key={index}>
                     
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.title}</td>
-                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.firstName}</td>
-                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.middleName}</td>
-                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.lastName}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.name}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.fatherName}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.surname}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.email}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.mobileNumber}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.alternateMobileNumber}</td>
@@ -180,8 +187,9 @@ XLSX.writeFile(workbook, "table_data.xlsx");
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.mandal}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.state}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.address}</td>
-                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.employeeId}</td>
-                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.internetProvider}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.permanentAddress.district}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.relation}</td>
+                  <td className="text-center border border-gray-600 whitespace-nowrap">{item.televisionRecharge}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.wifiExpense}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.wifiRecharge}</td>
                   <td className="text-center border border-gray-600 whitespace-nowrap">{item.currentInternetPlanValidity}</td>
