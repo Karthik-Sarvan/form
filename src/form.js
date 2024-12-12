@@ -29,6 +29,7 @@ function Form() {
     const permanentMandal = useRef(null);
     const permanentVillage = useRef(null);
     const permanentPincode = useRef(null);
+    const district = useRef();
     const currentAddress = useRef();
     const currentState = useRef();
     const currentMandal = useRef();
@@ -337,15 +338,15 @@ function Form() {
       }
   
       const data = {
-        employeeId: BanasEmployeeID.current.value,
+        relation: BanasEmployeeID.current.value,
         title: title.current.value,
-        firstName: firstName.current.value,
-        middleName: middleName.current.value,
-        lastName: lastName.current.value,
+        name: firstName.current.value,
+        fatherName: middleName.current.value,
+        surname: lastName.current.value,
         // gender: gender.current.value,
         email: email.current.value,
-        mobileNumber: mobileNumber.current.value,
-        alternateMobileNumber: alternateMobileNumber.current.value,
+        mobileNumber: Number(mobileNumber.current.value),
+        alternateMobileNumber: Number(alternateMobileNumber.current.value),
         permanentAddress: {
           address: permanentAddress.current.value,
           state: permanentState.current.value,
@@ -353,9 +354,10 @@ function Form() {
           village: permanentVillage.current.value,
           pincode: permanentPincode.current.value,
           mandaliNearAddress: mandaliNearAddress.current.value,
+          district: district.current.value,
         },
         // hasFiberInternet: fiber.current.value,
-        internetProvider: internetConnectionProvider.current.value,
+        televisionRecharge: internetConnectionProvider.current.value,
         wifiExpense: wifiExpense.current.value,
         wifiRecharge: wifiRecharge.current.value,
         currentInternetPlanValidity: internetPlanValidity.current.value,
@@ -385,10 +387,13 @@ function Form() {
         }
       )
         .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-            alert("Error in form submission");
+          if(response.status == 400) {
+            alert("The Phone number is already registered");
           }
+          else if(!response.ok){
+            console.log(response);
+            throw new Error(`HTTP error! status: ${response.status}`);
+          } 
           return response.json();
         })
         .then((responseData) => {
@@ -429,7 +434,7 @@ function Form() {
       // partner.current.value = "Banas Diary";
       // dob.current.value = "";
       permanentAddress.current.value = "";
-      permanentState.current.value = "";
+      permanentState.current.value = "Gujarat";
       permanentMandal.current.value = "";
       permanentVillage.current.value = "";
       permanentPincode.current.value = "";
@@ -448,6 +453,7 @@ function Form() {
       wifiRecharge.current.value = "1";
   
       internetPlanValidity.current.value = "3";
+      district.current.value = "";
   
       // internetPlanExpiryDate.current.value = "";
       // televisionConnectionProvider.current.value = "";
@@ -1270,6 +1276,18 @@ function Form() {
               <input
                 ref={permanentState}
                 defaultValue="Gujarat"
+                type="text"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
+              />
+            </div>
+            <div className="flex flex-col ">
+              <label className="">
+                District / જિલ્લો
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={district}
                 type="text"
                 required
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
