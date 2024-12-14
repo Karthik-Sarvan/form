@@ -790,7 +790,7 @@ function Form() {
               >
                 <option value="none">Other / અન્ય</option>
                 <option value="employee">As an employee / કર્મચારી તરીકે</option>
-                <option value="milk-pourer">As a milk pourer / દૂધ પાવડર તરીકે</option>
+                <option value="milk-pourer">As a milk pourer / દુધ ગ્રાહક લખાવો</option>
                 <option value="business">Business / વેપાર</option>
   
               </select>
