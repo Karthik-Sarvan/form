@@ -789,9 +789,9 @@ function Form() {
                 // }}
               >
                 <option value="none">Other / અન્ય</option>
-                <option value="employee">As an employee / કર્મચારી તરીકે</option>
-                <option value="milk-pourer">As a milk pourer / દુધ ગ્રાહક લખાવો</option>
-                <option value="business">Business / વેપાર</option>
+                <option value="employee">As an employee / કર્મચારી </option>
+                <option value="milk-pourer">As a milk pourer / દુધ ગ્રાહક </option>
+                {/* <option value="business">Business / વેપાર</option> */}
   
               </select>
   
@@ -837,7 +837,7 @@ function Form() {
             {showMiddleName && (
               <div className="flex flex-col md:hidden ">
                 <label className="">
-                  Father Name / પિતા નામ (Optional)
+                  Father Name / પિતા નું નામ (Optional)
                 </label>
                 <input
                   ref={middleName}
@@ -906,7 +906,7 @@ function Form() {
             {!showMiddleName && (
               <div className="hidden md:flex md:flex-col ">
                 <label className="">
-                  Father Name / પિતા નામ
+                  Father Name / પિતા નું નામ
                 </label>
                 <input
                   ref={middleName}
@@ -1069,7 +1069,7 @@ function Form() {
   
             <div className="flex flex-col ">
               <label className="">
-                Alternate Mobile Number(optional) / વૈકલ્પિક મોબાઇલ નંબર
+                Residence Mobile Number(optional) / અન્ય મોબાઇલ નંબર
               </label>
               <input
                 ref={alternateMobileNumber}
@@ -1231,44 +1231,8 @@ function Form() {
                 </span>
               )}
             </div> */}
-            <div className="flex flex-col ">
-              <label>
-                Address / કાયમી સરનામું
-                <span className="text-red-500">*</span>
-              </label>
+           
   
-              <textarea
-                ref={permanentAddress}
-                required
-                className="border md:w-[30vw] h-14 lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              />
-            </div>
-  
-            <div className="flex flex-col ">
-              <label className="">
-                Pincode / પિનકોડ
-                <span className="text-red-500">*</span>
-              </label>
-              <input
-                ref={permanentPincode}
-                type="text"
-                required
-                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-                onChange={(e) => {
-                  if (!/^[0-9]*$/.test(e.target.value)) {
-                    e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-                  }
-                  // Prevent more than 12 digits
-                  if (e.target.value.length > 6) {
-                    e.target.value = e.target.value.slice(0, 6);
-                  }
-                  validateInputs();
-                }}
-              />
-              {permanentPincodeerr && (
-                <span className="text-red-500">Enter valid pincode</span>
-              )}
-            </div>
   
             <div className="flex flex-col ">
               <label className="">
@@ -1309,7 +1273,7 @@ function Form() {
             </div>
             <div className="flex flex-col ">
               <label className="">
-                Village / Area / ગામ / વિસ્તાર
+                Village / City / ગામ / શહેર 
                 <span className="text-red-500">*</span>
               </label>
               <input
@@ -1319,26 +1283,64 @@ function Form() {
                 className="border  md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               />
             </div>
+              
+            <div className="flex flex-col ">
+              <label>
+                Address /  સરનામું
+                <span className="text-red-500">*</span>
+              </label>
   
+              <textarea
+                ref={permanentAddress}
+                required
+                className="border md:w-[30vw] h-14 lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              />
+            </div>
+            
+            <div className="flex flex-col ">
+              <label className="">
+                Pincode / પિનકોડ
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={permanentPincode}
+                type="text"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                onChange={(e) => {
+                  if (!/^[0-9]*$/.test(e.target.value)) {
+                    e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                  }
+                  // Prevent more than 12 digits
+                  if (e.target.value.length > 6) {
+                    e.target.value = e.target.value.slice(0, 6);
+                  }
+                  validateInputs();
+                }}
+              />
+              {permanentPincodeerr && (
+                <span className="text-red-500">Enter valid pincode</span>
+              )}
+            </div>
             <div className="flex flex-col ">
               <div className="flex gap-2">
                 <label className="">
-                  Mandali Name / સરનામું પાસે મંડળી
+                  Mandali Name / મંડળીનું નામ
                   <span className="text-red-500">*</span>
                 </label>
-                <label className="flex items-center gap-1 text-sm">
+                {/* <label className="flex items-center gap-1 text-sm">
                   <input
                     type="checkbox"
                     ref={mandaliNearAddress}
                     onChange={handleNAChange}
                   />
                   N/A
-                </label>
+                </label> */}
               </div>
               <input
                 type="text"
-                disabled={isNA}
-                required={!isNA}
+                // disabled={isNA}
+                required={true}
                 ref={mandaliNearAddress}
                 className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
                   isNA ? "bg-gray-100 cursor-not-allowed" : ""
@@ -1459,7 +1461,7 @@ function Form() {
   
             <div className="flex flex-col ">
               <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-                How often do you recharge your television / તમે તમારા ટેલિવિઝનને
+                How often do you recharge television / તમે તમારા ટેલિવિઝનને
                 કેટલી વાર રિચાર્જ કરો છો
               </label>
               {/* <input
@@ -1489,8 +1491,7 @@ function Form() {
             </div>
             <div className="flex flex-col ">
               <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-                If you have wifi what is the current expense / જો તમારી પાસે wifi
-                છે તો વર્તમાન ખર્ચ કેટલો છે
+                WIFI Expense / વાઇફાઇ ખર્ચ
               </label>
               <select
                 ref={wifiExpense}
@@ -1503,7 +1504,7 @@ function Form() {
             </div>
             <div className="flex flex-col ">
               <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-                How often do you recharge your wifi connection / તમે તમારું વાઇફાઇ
+                How often do you recharge wifi connection / તમે તમારું વાઇફાઇ
                 કનેક્શન કેટલી વાર રિચાર્જ કરો છો
               </label>
               <select
@@ -1544,7 +1545,7 @@ function Form() {
             </div> */}
             <div className="flex flex-col ">
               <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-                Current Internet Plan Validity(optional) / વર્તમાન ઈન્ટરનેટ
+                Expense of Recharge (optional) / વર્તમાન ઈન્ટરનેટ
                 પ્લાનની માન્યતા
               </label>
               <select
@@ -1554,13 +1555,10 @@ function Form() {
                 // required={hasFiberConnection}
                 ref={internetPlanValidity}
                 className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}>
-                <option value="1">1 month</option>
-                <option value="2">2 months</option>
-                <option value="3">3 months</option>
-                <option value="4">4 months</option>
-                <option value="5">5 months</option>
-                <option value="6">6 months</option>
-                <option value="12">12 months</option>
+                <option value="100-200">100-200</option>
+                <option value="200-500">200-500</option>
+                <option value="500-1000">500-1000</option>
+                <option value="above 1000">Above 1000</option>
               </select>
             </div>
             {/* <div className="flex flex-col ">
@@ -1791,18 +1789,18 @@ function Form() {
                 className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md">
                 Submit
               </button>
-  
+{/*   
               <button
                 type="button"
                 className="bg-[#5bc0de] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md"
                 onClick={(e) => clearHandler(e)}>
                 Clear
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 type="button"
                 className="bg-[#d9534f] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md">
                 Cancel
-              </button>
+              </button> */}
             </div>
             {submissionSuccess && (
               <p className="w-full text-center text-green-500">
