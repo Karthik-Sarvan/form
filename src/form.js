@@ -31,6 +31,7 @@ function Form() {
   const permanentVillage = useRef(null);
   const permanentPincode = useRef(null);
   const district = useRef();
+  const district2 = useRef();
   const currentAddress = useRef();
   const currentState = useRef();
   const currentMandal = useRef();
@@ -362,7 +363,7 @@ function Form() {
         mandaliNearAddress: mandaliNearAddress.current.value,
         mandaliCode: mandaliCode.current.value,
         // uniqueCode: uniqueCode.current.value,
-        district: district.current.value,
+        district: (district.current.value == "Other" && district2.current.value) || district.current.value,
       },
       // hasFiberInternet: fiber.current.value,
       televisionRecharge: internetConnectionProvider.current.value,
@@ -1300,6 +1301,23 @@ function Form() {
               <option value="Other">Other</option>
             </select>
           </div>
+          {
+            (district1 === "Other") ? (
+              <div className="flex flex-col mt-4">
+              <label>
+              District / જિલ્લો
+              <span className="text-red-500">*</span>
+            </label>
+              <input 
+              ref={district2}
+              type="text"
+              required
+              placeholder="Enter District"
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              />
+              </div>
+            ) : null
+          }
           <div className="flex flex-col ">
             <label className="">
               Taluka / તાલુકો
