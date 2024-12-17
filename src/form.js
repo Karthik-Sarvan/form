@@ -340,6 +340,9 @@ function Form() {
       return alert("Enter valid pincode");
     }
 
+    // console.log(mandaliCode.current.value);
+    // return;
+
     const data = {
       relation: BanasEmployeeID.current.value,
       title: title.current.value,
@@ -358,7 +361,7 @@ function Form() {
         pincode: permanentPincode.current.value,
         mandaliNearAddress: mandaliNearAddress.current.value,
         mandaliCode: mandaliCode.current.value,
-        uniqueCode: uniqueCode.current.value,
+        // uniqueCode: uniqueCode.current.value,
         district: district.current.value,
       },
       // hasFiberInternet: fiber.current.value,
@@ -394,8 +397,7 @@ function Form() {
       .then((response) => {
         if (response.status == 400) {
           alert("The Phone number is already registered");
-        }
-        else if (!response.ok) {
+        } else if (!response.ok) {
           console.log(response);
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -412,8 +414,6 @@ function Form() {
           setTimeout(() => setSubmissionSuccess(false), 3000);
           return response.json();
         }
-
-
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -455,7 +455,7 @@ function Form() {
 
     mandaliNearAddress.current.value = "";
     mandaliCode.current.value = "";
-    uniqueCode.current.value = "";
+    // uniqueCode.current.value = "";
     // fiber.current.value = "true";
     internetConnectionProvider.current.value = "1";
     // internetPrice.current.value = "";
@@ -529,6 +529,34 @@ function Form() {
     }
   };
 
+  const [relationship, setRelationship] = useState("milk-pourer");
+  const [district1, setDistrict1] = useState("BanasKantha");
+
+  // Options for BK (Banas Kantha) - 14 options
+  const bkOptions = [
+    { value: "Danta/દાંતા", label: "Danta/દાંતા" },
+    { value: "Palanpur/પાલનપુર", label: "Palanpur/પાલનપુર" },
+    { value: "Vadgam/વડગામ", label: "Vadgam/વડગામ" },
+    { value: "Amirgadh/અમીરગઢ", label: "Amirgadh/અમીરગઢ" },
+    { value: "Dantiwada/દાંતીવાડા", label: "Dantiwada/દાંતીવાડા" },
+    { value: "Deesa/ડીસા", label: "Deesa/ડીસા" },
+    { value: "Dhanera/ધાનેરા", label: "Dhanera/ધાનેરા" },
+    { value: "Lakhani/લખાણી", label: "Lakhani/લખાણી" },
+    { value: "Tharad/થરાદ", label: "Tharad/થરાદ" },
+    { value: "Vav/વાવ", label: "Vav/વાવ" },
+    { value: "Suigam/સૂઈગામ", label: "Suigam/સૂઈગામ" },
+    { value: "Bhabhar/ભાભર", label: "Bhabhar/ભાભર" },
+    { value: "Diyodar/દિયોદર", label: "Diyodar/દિયોદર" },
+    { value: "Kankrej/કાંકરેજ", label: "Kankrej/કાંકરેજ" },
+  ];
+
+  // Options for Patan - 16 options
+  const patanOptions = [
+    // ...bkOptions, // Include BK options
+    { value: "Radhanpur/રાધનપુર", label: "Radhanpur/રાધનપુર" },
+    { value: "Santalpur/સંતાલપુર", label: "Santalpur/સંતાલપુર" },
+  ];
+
   const handleAreaChange = (e) => {
     const area = e.target.value;
     setSelectedArea(area);
@@ -542,6 +570,8 @@ function Form() {
       setSections([]);
     }
   };
+
+  const [Mandalinvisible, setmandalinvisible] = useState(false);
 
   // const fetchPincodeDetails = async (pincode, type) => {
   //   try {
@@ -782,33 +812,23 @@ function Form() {
         <h1 className="text-2xl font-medium ">CAF Registration Form</h1>
         <form
           className="flex flex-wrap items-center justify-between w-full gap-5 mt-2 "
-          onSubmit={(e) => submitHandler(e)}>
-          <div className="flex flex-col ">
+          onSubmit={(e) => submitHandler(e)}
+        >
+          <div className="flex flex-col">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
               Your Relationship with Banas Dairy / બનાસ ડેરી સાથે તમારો સંબંધ
-              રીતે જોડાયેલા છો
               <span className="text-red-500">*</span>
             </label>
             <select
               ref={BanasEmployeeID}
+              onChange={(e) => setRelationship(e.target.value)}
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            // onChange={(e) => {
-            //   validateInputs();
-            // }}
             >
+              <option value="milk-pourer">As a milk pourer / દુધ ગ્રાહક</option>
+              <option value="employee">As an employee / તરીકે</option>
               <option value="none">Other / અન્ય</option>
-              <option value="employee">As an employee / કર્મચારી </option>
-              <option value="milk-pourer">As a milk pourer / દુધ ગ્રાહક </option>
-              {/* <option value="business">Business / વેપાર</option> */}
-
             </select>
-
-            {banasEmployeeIDErr && (
-              <span className="text-red-500">
-                Enter valid Employee ID number
-              </span>
-            )}
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -819,7 +839,8 @@ function Form() {
               name="title"
               ref={title}
               required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw]  border-gray-500 rounded-sm px-2 py-2">
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw]  border-gray-500 rounded-sm px-2 py-2"
+            >
               <option value="Mr.">Mr.</option>
               <option value="Mrs.">Mrs.</option>
               <option value="Ms.">Ms.</option>
@@ -836,27 +857,25 @@ function Form() {
               type="text"
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            // onChange={(e) => {
-            //   if (/^[0-9]*$/.test(e.target.value)) {
-            //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-            //   }
-            // }}
+              // onChange={(e) => {
+              //   if (/^[0-9]*$/.test(e.target.value)) {
+              //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+              //   }
+              // }}
             />
           </div>
           {showMiddleName && (
             <div className="flex flex-col md:hidden ">
-              <label className="">
-                Father Name / પિતા નું નામ (Optional)
-              </label>
+              <label className="">Father Name / પિતા નું નામ (Optional)</label>
               <input
                 ref={middleName}
                 type="text"
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              // onChange={(e) => {
-              //   if (/^[0-9]*$/.test(e.target.value)) {
-              //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-              // }  }
-              // }
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                // }  }
+                // }
               />
             </div>
           )}
@@ -871,11 +890,11 @@ function Form() {
                 type="text"
                 required
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              // onChange={(e) => {
-              //   if (/^[0-9]*$/.test(e.target.value)) {
-              //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-              //   }
-              // }}
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                //   }
+                // }}
               />
             </div>
           )}
@@ -914,18 +933,16 @@ function Form() {
           </div>
           {!showMiddleName && (
             <div className="hidden md:flex md:flex-col ">
-              <label className="">
-                Father Name / પિતા નું નામ
-              </label>
+              <label className="">Father Name / પિતા નું નામ</label>
               <input
                 ref={middleName}
                 type="text"
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              // onChange={(e) => {
-              //   if (/^[0-9]*$/.test(e.target.value)) {
-              //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-              //   }
-              // }}
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                //   }
+                // }}
               />
             </div>
           )}
@@ -1046,11 +1063,11 @@ function Form() {
                 type="text"
                 required
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-              // onChange={(e) => {
-              //   if (/^[0-9]*$/.test(e.target.value)) {
-              //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
-              //   }
-              // }}
+                // onChange={(e) => {
+                //   if (/^[0-9]*$/.test(e.target.value)) {
+                //     e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
+                //   }
+                // }}
               />
             </div>
           )}
@@ -1241,8 +1258,6 @@ function Form() {
               )}
             </div> */}
 
-
-
           <div className="flex flex-col ">
             <label className="">
               State / રાજ્ય
@@ -1257,7 +1272,8 @@ function Form() {
             /> */}
             <select
               ref={permanentState}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}>
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+            >
               <option value="Gujarat">Gujarat</option>
               <option value="Maharashtra">Maharashtra</option>
               <option value="Uttar Pradesh">Uttar Pradesh</option>
@@ -1267,21 +1283,24 @@ function Form() {
               <option value="Odisha">Odisha</option>
             </select>
           </div>
-          <div className="flex flex-col ">
-            <label className="">
+          <div className="flex flex-col mt-4">
+            <label>
               District / જિલ્લો
               <span className="text-red-500">*</span>
             </label>
-            <input
+            <select
               ref={district}
-              type="text"
-              required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 bg-gray-100"
-            />
+              onChange={(e) => setDistrict1(e.target.value)}
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            >
+              <option value="BanasKantha">BK (Banas Kantha)</option>
+              <option value="Patan">Patan</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
           <div className="flex flex-col ">
             <label className="">
-              Block / Taluka / બ્લોક / તાલુકો
+              Taluka / તાલુકો
               <span className="text-red-500">*</span>
             </label>
             {/* <input
@@ -1292,23 +1311,24 @@ function Form() {
             /> */}
             <select
               ref={permanentMandal}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}>
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+            >
               <option value="Danta/દાંતા">Danta/દાંતા</option>
               <option value="Palanpur/પાલનપુર">Palanpur/પાલનપુર</option>
               <option value="Vadgam/વડગામ">Vadgam/વડગામ</option>
               <option value="Amirgadh/અમીરગઢ">Amirgadh/અમીરગઢ</option>
-              <option value=" Danta Wada/દાંતવાડા"> Danta Wada/દાંતવાડા</option>
+              <option value=" Dantiwada/દાંતીવાડા"> Dantiwada/દાંતીવાડા</option>
               <option value="Deesa/ડીસા">Deesa/ડીસા</option>
               <option value=" Dhanera/ધાનેરા"> Dhanera/ધાનેરા</option>
-              <option value=" Lakhani/લખણી"> Lakhani/લખણી</option>
+              <option value=" Lakhani/લખાણી"> Lakhani/લખાણી</option>
               <option value=" Tharad/થરાદ"> Tharad/થરાદ</option>
-              <option value="  Vav/વાવ">  Vav/વાવ</option>
+              <option value="  Vav/વાવ"> Vav/વાવ</option>
               <option value=" Suigam/સૂઈગામ"> Suigam/સૂઈગામ</option>
               <option value="Bhabhar/ભાભર">Bhabhar/ભાભર</option>
               <option value="Diyodar/દિયોદર">Diyodar/દિયોદર</option>
               <option value="Kankrej/કાંકરેજ">Kankrej/કાંકરેજ</option>
               <option value="Radhanpur/રાધનપુર">Radhanpur/રાધનપુર</option>
-              <option value="Santalpur/સંતલપુર">Santalpur/સંતલપુર</option>
+              <option value="Santalpur/સંતાલપુર">Santalpur/સંતાલપુર</option>
             </select>
           </div>
           <div className="flex flex-col ">
@@ -1326,7 +1346,7 @@ function Form() {
 
           <div className="flex flex-col ">
             <label>
-              Address /  સરનામું
+              Address / સરનામું
               <span className="text-red-500">*</span>
             </label>
 
@@ -1340,12 +1360,12 @@ function Form() {
           <div className="flex flex-col ">
             <label className="">
               Pincode / પિનકોડ
-              <span className="text-red-500">*</span>
+              {/* <span className="text-red-500">*</span> */}
             </label>
             <input
               ref={permanentPincode}
               type="text"
-              required
+              // required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               onChange={(e) => {
                 if (!/^[0-9]*$/.test(e.target.value)) {
@@ -1377,20 +1397,44 @@ function Form() {
                   N/A
                 </label> */}
             </div>
-            <input
+            {relationship === "none" || district1 === "Other" ? (
+              <input
+                type="text"
+                placeholder="Enter Address"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                ref={mandaliNearAddress}
+              />
+            ) : (
+              <select
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                ref={mandaliNearAddress}
+              >
+                {/* Dynamically Render Options */}
+                {(district1 === "Patan" ? patanOptions : bkOptions).map(
+                  (option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  )
+                )}
+              </select>
+            )}
+            {/* <input
               type="text"
               // disabled={isNA}
               required={true}
               ref={mandaliNearAddress}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${isNA ? "bg-gray-100 cursor-not-allowed" : ""
-                }`}
-            />
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
+                isNA ? "bg-gray-100 cursor-not-allowed" : ""
+              }`}
+            /> */}
           </div>
           <div className="flex flex-col ">
             <div className="flex gap-2">
               <label className="">
                 Mandali Code / મંડળી કોડ
-                <span className="text-red-500">*</span>
+                {/* <span className="text-red-500">*</span> */}
               </label>
               {/* <label className="flex items-center gap-1 text-sm">
                   <input
@@ -1404,10 +1448,11 @@ function Form() {
             <input
               type="text"
               // disabled={isNA}
-              required={true}
+              // required={true}
               ref={mandaliCode}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${isNA ? "bg-gray-100 cursor-not-allowed" : ""
-                }`}
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
+                isNA ? "bg-gray-100 cursor-not-allowed" : ""
+              }`}
               onChange={(e) => {
                 if (!/^[0-9]*$/.test(e.target.value)) {
                   e.target.value = e.target.value.slice(0, -1); // Remove last character if invalid
@@ -1420,30 +1465,24 @@ function Form() {
               }}
             />
           </div>
-          <div className="flex flex-col ">
+          {/* <div className="flex flex-col ">
             <div className="flex gap-2">
               <label className="">
                 Unique Code / અનન્ય કોડ
                 <span className="text-red-500">*</span>
               </label>
-              {/* <label className="flex items-center gap-1 text-sm">
-                  <input
-                    type="checkbox"
-                    ref={mandaliNearAddress}
-                    onChange={handleNAChange}
-                  />
-                  N/A
-                </label> */}
+             
             </div>
             <input
               type="text"
               // disabled={isNA}
               required={true}
               ref={uniqueCode}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${isNA ? "bg-gray-100 cursor-not-allowed" : ""
-                }`}
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 ${
+                isNA ? "bg-gray-100 cursor-not-allowed" : ""
+              }`}
             />
-          </div>
+          </div> */}
           {/* <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <label>
@@ -1557,8 +1596,8 @@ function Form() {
 
           <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-              How often do you recharge television / તમે તમારા ટેલિવિઝનને
-              કેટલી વાર રિચાર્જ કરો છો
+              How often do you recharge television / તમે તમારા ટેલિવિઝનને કેટલી
+              વાર રિચાર્જ કરો છો
             </label>
             {/* <input
                 ref={internetConnectionProvider}
@@ -1575,7 +1614,8 @@ function Form() {
 
             <select
               ref={internetConnectionProvider}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}>
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+            >
               <option value="1">1 month</option>
               <option value="2">2 months</option>
               <option value="3">3 months</option>
@@ -1591,7 +1631,8 @@ function Form() {
             </label>
             <select
               ref={wifiExpense}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}>
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+            >
               <option value="100-200">100-200</option>
               <option value="200-500">200-500</option>
               <option value="500-1000">500-1000</option>
@@ -1605,7 +1646,8 @@ function Form() {
             </label>
             <select
               ref={wifiRecharge}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}>
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+            >
               <option value="1">1 month</option>
               <option value="2">2 months</option>
               <option value="3">3 months</option>
@@ -1641,8 +1683,7 @@ function Form() {
             </div> */}
           <div className="flex flex-col ">
             <label className="md:w-[30vw] lg:w-[35vw] w-[70vw]">
-              Expense of Recharge (optional) / વર્તમાન ઈન્ટરનેટ
-              પ્લાનની માન્યતા
+              Expense of Recharge (optional) / વર્તમાન ઈન્ટરનેટ પ્લાનની માન્યતા
             </label>
             <select
               name="fiber"
@@ -1650,7 +1691,8 @@ function Form() {
               // disabled={!hasFiberConnection}
               // required={hasFiberConnection}
               ref={internetPlanValidity}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}>
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+            >
               <option value="100-200">100-200</option>
               <option value="200-500">200-500</option>
               <option value="500-1000">500-1000</option>
@@ -1879,10 +1921,11 @@ function Form() {
                 <input ref={Image} type="file" className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-5 py-2" />
                 </div> */}
 
-          <div className="flex md:flex-row lg:flex-row flex-col items-center w-[50%] mx-auto justify-center gap-5 mt-10">
+          <div className="flex md:flex-row lg:flex-row flex-col items-center w-full mx-auto justify-center gap-5 mt-10">
             <button
               type="submit"
-              className="bg-[#5cb85c] md:w-fit lg:w-fit w-full text-white md:px-10 py-2 text-xl rounded-md">
+              className="bg-[#5cb85c] md:w-fit lg:w-fit px-5 text-white md:px-10 py-2 text-xl rounded-md"
+            >
               Submit
             </button>
             {/*   
@@ -1904,7 +1947,7 @@ function Form() {
             </p>
           )}
         </form>
-      <button onClick={() => setPopup(true)}>yr6ygfhbtyhgb</button>
+        {/* <button onClick={() => setPopup(true)}>yr6ygfhbtyhgb</button> */}
       </div>
       {popup ? <Popup onClose={() => setPopup(false)} /> : null}
     </div>
