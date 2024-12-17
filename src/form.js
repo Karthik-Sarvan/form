@@ -531,6 +531,7 @@ function Form() {
 
   const [relationship, setRelationship] = useState("milk-pourer");
   const [district1, setDistrict1] = useState("BanasKantha");
+  const [state1, setState1] = useState("Gujarat");
 
   // Options for BK (Banas Kantha) - 14 options
   const bkOptions = [
@@ -826,7 +827,7 @@ function Form() {
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             >
               <option value="milk-pourer">As a milk pourer / દુધ ગ્રાહક</option>
-              <option value="employee">As an employee / તરીકે</option>
+              <option value="employee">As an employee / કર્મચારી </option>
               <option value="none">Other / અન્ય</option>
             </select>
           </div>
@@ -1272,6 +1273,7 @@ function Form() {
             /> */}
             <select
               ref={permanentState}
+              onChange={(e) => setState1(e.target.value)}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
             >
               <option value="Gujarat">Gujarat</option>
@@ -1309,7 +1311,9 @@ function Form() {
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             /> */}
-            <select
+            {
+              (district1 === "BanasKantha" && state1 === "Gujarat") ? (
+                <select
               ref={permanentMandal}
               className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
             >
@@ -1327,9 +1331,24 @@ function Form() {
               <option value="Bhabhar/ભાભર">Bhabhar/ભાભર</option>
               <option value="Diyodar/દિયોદર">Diyodar/દિયોદર</option>
               <option value="Kankrej/કાંકરેજ">Kankrej/કાંકરેજ</option>
+            </select>
+              ) : (district1 === "Patan" && state1 === "Gujarat") ? (
+                <select
+              ref={permanentMandal}
+              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+            >
               <option value="Radhanpur/રાધનપુર">Radhanpur/રાધનપુર</option>
               <option value="Santalpur/સંતાલપુર">Santalpur/સંતાલપુર</option>
             </select>
+              ) : (
+                 <input
+              ref={permanentMandal}
+              type="text"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+            /> )
+
+            }
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -1397,7 +1416,7 @@ function Form() {
                   N/A
                 </label> */}
             </div>
-            {relationship === "none" || district1 === "Other" ? (
+            {/* {relationship === "none" || district1 === "Other" ? ( */}
               <input
                 type="text"
                 placeholder="Enter Address"
@@ -1405,12 +1424,11 @@ function Form() {
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
                 ref={mandaliNearAddress}
               />
-            ) : (
+            {/* ) : (
               <select
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
                 ref={mandaliNearAddress}
               >
-                {/* Dynamically Render Options */}
                 {(district1 === "Patan" ? patanOptions : bkOptions).map(
                   (option) => (
                     <option key={option.value} value={option.value}>
@@ -1420,6 +1438,7 @@ function Form() {
                 )}
               </select>
             )}
+             */}
             {/* <input
               type="text"
               // disabled={isNA}
