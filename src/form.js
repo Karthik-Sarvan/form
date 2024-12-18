@@ -386,7 +386,7 @@ function Form() {
     };
     console.log(data);
     fetch(
-      "https://caf-form-server-production.up.railway.app/api/form/post-form",
+      "https://caf-form-server-production-8751.up.railway.app/api/form/post-form",
       {
         method: "POST",
         headers: {
