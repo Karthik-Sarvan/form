@@ -335,22 +335,20 @@ function Form() {
 
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+  
     if (permanentPincodeerr) {
       return alert("Enter valid pincode");
     }
-
-    // console.log(mandaliCode.current.value);
-    // return;
-
+  
+    // Prepare the form data
     const data = {
       relation: BanasEmployeeID.current.value,
       title: title.current.value,
       name: firstName.current.value,
       fatherName: middleName.current.value,
       surname: lastName.current.value,
-      // gender: gender.current.value,
       email: email.current.value,
       mobileNumber: Number(mobileNumber.current.value),
       alternateMobileNumber: Number(alternateMobileNumber.current.value),
@@ -362,64 +360,76 @@ function Form() {
         pincode: permanentPincode.current.value,
         mandaliNearAddress: mandaliNearAddress.current.value,
         mandaliCode: mandaliCode.current.value,
-        // uniqueCode: uniqueCode.current.value,
-        district: (district.current.value == "Other" && district2.current.value) || district.current.value,
+        district: (district.current.value === "Other" && district2.current.value) || district.current.value,
       },
-      // hasFiberInternet: fiber.current.value,
       televisionRecharge: internetConnectionProvider.current.value,
       wifiExpense: wifiExpense.current.value,
       wifiRecharge: wifiRecharge.current.value,
       currentInternetPlanValidity: internetPlanValidity.current.value,
-      // currentInternetPrice: internetPrice.current.value,
-      // currentPlanExpiryDate: internetPlanExpiryDate.current.value,
-
-      // televisionProvider: televisionConnectionProvider.current.value,
-      // televisionPrice: televisionPrice.current.value,
-      // currentTelevisionPlanValidity: televisionPlanValidity.current.value,
-      // currentTelevisionPlanExpiryDate: televisionPlanExpiryDate.current.value,
-      // usesOTT: ott.current.value,
-      // ...(ott.current.value === "true" && { ottUsed: ottUsed.current.value }),
-      // numberOfTVs: tvCount.current.value,
-      // wantsFreeEducationContent: freeEducationContent.current.value,
-      // preferredPlan: preferredPlan.current.value,
-      // preferredPlanPricing: preferredPlanPricing.current.value,
     };
-    console.log(data);
-    fetch(
-      "https://caf-form-server-production-8751.up.railway.app/api/form/post-form",
-      {
+  
+    try {
+      // First API call to get the voucher (token)
+      const authResponse = await fetch("https://caf-form-server-production-8751.up.railway.app/api/form/get-form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((response) => {
-        if (response.status == 400) {
-          alert("The Phone number is already registered");
-        } else if (!response.ok) {
-          console.log(response);
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        console.log("Success:", response);
-        if (response.ok) {
-          // If the response is successful, clear the form
-          // alert("Form submitted successfully");
-          setPopup(true);
-          clearHandler(e);
-          setSubmissionSuccess(true);
-
-          // Hide success message after 3 seconds
-          setTimeout(() => setSubmissionSuccess(false), 3000);
-          return response.json();
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+        body: JSON.stringify({
+          userName: "User",
+          password: "user@123",
+        }),
       });
+  
+      if (!authResponse.ok) {
+        alert("Something went wrong");
+        return;
+      }
+  
+      const authData = await authResponse.json();
+      const voucher = authData.voucher; // Assuming the response contains the token as `voucher`
+  
+      // Second API call to post the form data
+      const formResponse = await fetch(
+        "https://caf-form-server-production-8751.up.railway.app/api/form/post-form",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${voucher}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+  
+      if (formResponse.status === 400) {
+        alert("The Phone number is already registered");
+        return;
+      }
+  
+      if (!formResponse.ok) {
+        console.log(formResponse);
+        throw new Error(`HTTP error! status: ${formResponse.status}`);
+      }
+  
+      console.log("Success:", formResponse);
+      if (formResponse.ok) {
+        // If the response is successful, clear the form
+        setPopup(true);
+        clearHandler(e);
+        setSubmissionSuccess(true);
+  
+        // Hide success message after 3 seconds
+        setTimeout(() => setSubmissionSuccess(false), 3000);
+  
+        return formResponse.json();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while submitting the form. Please try again.");
+    }
   };
+  
 
   const clearHandler = (e) => {
     e.preventDefault();
