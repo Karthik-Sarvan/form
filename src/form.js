@@ -4,8 +4,10 @@ import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { clear } from "@testing-library/user-event/dist/clear";
 import Popup from "./popup";
+import Loader from "./Loader";
 
 function Form() {
+  const [loader, setLoader] = useState(false);
   const BanasEmployeeID = useRef();
   const title = useRef();
   const firstName = useRef();
@@ -337,9 +339,11 @@ function Form() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-  
+    setLoader(true);
     if (permanentPincodeerr) {
+      setLoader(false);
       return alert("Enter valid pincode");
+
     }
   
     // Prepare the form data
@@ -383,6 +387,7 @@ function Form() {
   
       if (!authResponse.ok) {
         alert("Something went wrong");
+        setLoader(false);
         return;
       }
   
@@ -404,11 +409,13 @@ function Form() {
   
       if (formResponse.status === 400) {
         alert("The Phone number is already registered");
+        setLoader(false);
         return;
       }
   
       if (!formResponse.ok) {
         console.log(formResponse);
+        setLoader(false);
         throw new Error(`HTTP error! status: ${formResponse.status}`);
       }
   
@@ -416,6 +423,7 @@ function Form() {
       if (formResponse.ok) {
         // If the response is successful, clear the form
         setPopup(true);
+        setLoader(false);
         clearHandler(e);
         setSubmissionSuccess(true);
   
@@ -426,6 +434,7 @@ function Form() {
       }
     } catch (error) {
       console.error("Error:", error);
+      setLoader(false);
       alert("An error occurred while submitting the form. Please try again.");
     }
   };
@@ -812,6 +821,7 @@ function Form() {
 
   return (
     <div className="App w-[90%] md:w-[80%] mx-auto my-[2%] border-x-2 border-b-2 border-[#c0dce4] rounded-[20px]">
+      <Loader load={loader} />
       <div className="background w-[99.5%] mx-auto px-5 py-3 gap-5 flex items-center justify-center  ">
         {/* <img src={logo} alt="logo" className="md:w-[5vw] lg:w-[7vw] w-[15vw]" /> */}
         <img src={desh} alt="logo" className="md:h-[5vh] lg:h-[10vh] h-[5vh]" />
