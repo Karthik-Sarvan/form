@@ -519,7 +519,19 @@ function Form() {
   const [areas, setAreas] = useState([]);
   const [sections, setSections] = useState([]);
   const [popup, setPopup] = useState(false);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mandaliParam = urlParams.get('mandali');
+    const villageParam = urlParams.get('village');
 
+    if (mandaliParam) {
+      mandaliNearAddress.current.value = mandaliParam;
+    }
+
+    if (villageParam) {
+      permanentVillage.current.value = villageParam;
+    }
+  }, []);
   useEffect(() => {
     const today = new Date();
     const maxDate = today.toISOString().split("T")[0]; // Today's date
