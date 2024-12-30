@@ -14,7 +14,7 @@ function Table() {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://caf-form-server-production-8751.up.railway.app/api/form/all-forms-data?skip=${
+      `https://caf-form-server-aggzagf5hke8b2d9.southindia-01.azurewebsites.net//api/form/all-forms-data?skip=${
         currentPage * rowsPerPage
       }&limit=${rowsPerPage}`
     )
