@@ -374,7 +374,7 @@ function Form() {
   
     try {
       // First API call to get the voucher (token)
-      const authResponse = await fetch("https://caf-form-server-production-8751.up.railway.app/api/form/get-form", {
+      const authResponse = await fetch("https://caf-form-server-aggzagf5hke8b2d9.southindia-01.azurewebsites.net//api/form/get-form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -396,7 +396,7 @@ function Form() {
   
       // Second API call to post the form data
       const formResponse = await fetch(
-        "https://caf-form-server-production-8751.up.railway.app/api/form/post-form",
+        "https://caf-form-server-aggzagf5hke8b2d9.southindia-01.azurewebsites.net//api/form/post-form",
         {
           method: "POST",
           headers: {
