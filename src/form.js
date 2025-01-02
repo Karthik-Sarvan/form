@@ -337,6 +337,10 @@ function Form() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if(permanentMandal.current.value === ""){
+      alert("Please select Taluka ");
+      return;
+    }
     if (permanentPincodeerr) {
       return alert("Enter valid pincode");
     }
@@ -363,7 +367,9 @@ function Form() {
         mandaliNearAddress: mandaliNearAddress.current.value,
         mandaliCode: mandaliCode.current.value,
         // uniqueCode: uniqueCode.current.value,
-        district: (district.current.value == "Other" && district2.current.value) || district.current.value,
+        district:
+          (district.current.value == "Other" && district2.current.value) ||
+          district.current.value,
       },
       // hasFiberInternet: fiber.current.value,
       televisionRecharge: internetConnectionProvider.current.value,
@@ -1301,23 +1307,21 @@ function Form() {
               <option value="Other">Other</option>
             </select>
           </div>
-          {
-            (district1 === "Other") ? (
-              <div className="flex flex-col mt-4">
+          {district1 === "Other" ? (
+            <div className="flex flex-col mt-4">
               <label>
-              District / જિલ્લો
-              <span className="text-red-500">*</span>
-            </label>
-              <input 
-              ref={district2}
-              type="text"
-              required
-              placeholder="Enter District"
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+                District / જિલ્લો
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={district2}
+                type="text"
+                required
+                placeholder="Enter District"
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
               />
-              </div>
-            ) : null
-          }
+            </div>
+          ) : null}
           <div className="flex flex-col ">
             <label className="">
               Taluka / તાલુકો
@@ -1329,44 +1333,59 @@ function Form() {
               required
               className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
             /> */}
-            {
-              (district1 === "BanasKantha" && state1 === "Gujarat") ? (
-                <select
-              ref={permanentMandal}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
-            >
-              <option value="Danta/દાંતા">Danta/દાંતા</option>
-              <option value="Palanpur/પાલનપુર">Palanpur/પાલનપુર</option>
-              <option value="Vadgam/વડગામ">Vadgam/વડગામ</option>
-              <option value="Amirgadh/અમીરગઢ">Amirgadh/અમીરગઢ</option>
-              <option value=" Dantiwada/દાંતીવાડા"> Dantiwada/દાંતીવાડા</option>
-              <option value="Deesa/ડીસા">Deesa/ડીસા</option>
-              <option value=" Dhanera/ધાનેરા"> Dhanera/ધાનેરા</option>
-              <option value=" Lakhani/લખાણી"> Lakhani/લખાણી</option>
-              <option value=" Tharad/થરાદ"> Tharad/થરાદ</option>
-              <option value="  Vav/વાવ"> Vav/વાવ</option>
-              <option value=" Suigam/સૂઈગામ"> Suigam/સૂઈગામ</option>
-              <option value="Bhabhar/ભાભર">Bhabhar/ભાભર</option>
-              <option value="Diyodar/દિયોદર">Diyodar/દિયોદર</option>
-              <option value="Kankrej/કાંકરેજ">Kankrej/કાંકરેજ</option>
-            </select>
-              ) : (district1 === "Patan" && state1 === "Gujarat") ? (
-                <select
-              ref={permanentMandal}
-              className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
-            >
-              <option value="Radhanpur/રાધનપુર">Radhanpur/રાધનપુર</option>
-              <option value="Santalpur/સંતાલપુર">Santalpur/સંતાલપુર</option>
-            </select>
-              ) : (
-                 <input
-              ref={permanentMandal}
-              type="text"
-              required
-              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-            /> )
-
-            }
+            {district1 === "BanasKantha" && state1 === "Gujarat" ? (
+              <select
+                ref={permanentMandal}
+                className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+              >
+                <option value="">Select an Option</option>
+                <option value="Danta/દાંતા">Danta/દાંતા</option>
+                <option value="Palanpur/પાલનપુર">Palanpur/પાલનપુર</option>
+                <option value="Vadgam/વડગામ">Vadgam/વડગામ</option>
+                <option value="Amirgadh/અમીરગઢ">Amirgadh/અમીરગઢ</option>
+                <option value=" Dantiwada/દાંતીવાડા">
+                  {" "}
+                  Dantiwada/દાંતીવાડા
+                </option>
+                <option value="Deesa/ડીસા">Deesa/ડીસા</option>
+                <option value=" Dhanera/ધાનેરા"> Dhanera/ધાનેરા</option>
+                <option value=" Lakhani/લખાણી"> Lakhani/લખાણી</option>
+                <option value=" Tharad/થરાદ"> Tharad/થરાદ</option>
+                <option value="  Vav/વાવ"> Vav/વાવ</option>
+                <option value=" Suigam/સૂઈગામ"> Suigam/સૂઈગામ</option>
+                <option value="Bhabhar/ભાભર">Bhabhar/ભાભર</option>
+                <option value="Deodar/દિયોદર">Deodar/દિયોદર</option>
+                <option value="Kankrej/કાંકરેજ">Kankrej/કાંકરેજ</option>
+              </select>
+            ) : district1 === "Patan" && state1 === "Gujarat" ? (
+              <select
+                ref={permanentMandal}
+                className={`border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2 `}
+              >
+                <option value="">Select an Option</option>
+                <option value="Radhanpur/રાધનપુર">Radhanpur/રાધનપુર</option>
+                <option value="Santalpur/સંતાલપુર">Santalpur/સંતાલપુર</option>
+                <option value="Patan/પાટણ">Patan/પાટણ</option>
+                <option value="Sidhpur/સિદ્ધપુર">Sidhpur/સિદ્ધપુર</option>
+                <option value="Saraswati/સરસ્વતી">Saraswati/સરસ્વતી</option>
+                <option value="Chanasma/ચાણસ્મા">Chanasma/ચાણસ્મા</option>
+                <option value="Harij/હરિજ">Harij/હરિજ</option>
+                <option value="Sami/સામી">Sami/સામી</option>
+                <option value="Shankhersvar/શંખેશ્વર">
+                  Shankhersvar/શંખેશ્વર
+                </option>
+                <option value="Patan-City/પાટણ-શહેર">
+                  Patan-City/પાટણ-શહેર
+                </option>
+              </select>
+            ) : (
+              <input
+                ref={permanentMandal}
+                type="text"
+                required
+                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              />
+            )}
           </div>
           <div className="flex flex-col ">
             <label className="">
@@ -1435,13 +1454,13 @@ function Form() {
                 </label> */}
             </div>
             {/* {relationship === "none" || district1 === "Other" ? ( */}
-              <input
-                type="text"
-                placeholder="Enter Address"
-                required
-                className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
-                ref={mandaliNearAddress}
-              />
+            <input
+              type="text"
+              placeholder="Enter Address"
+              required
+              className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
+              ref={mandaliNearAddress}
+            />
             {/* ) : (
               <select
                 className="border md:w-[30vw] lg:w-[35vw] w-[70vw] border-gray-500 rounded-sm px-2 py-2"
