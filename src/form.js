@@ -4,8 +4,10 @@ import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { clear } from "@testing-library/user-event/dist/clear";
 import Popup from "./popup";
+import Loader from "./Loader";
 
 function Form() {
+  const [loader, setLoader] = useState(false);
   const BanasEmployeeID = useRef();
   const title = useRef();
   const firstName = useRef();
@@ -335,26 +337,26 @@ function Form() {
 
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     if(permanentMandal.current.value === ""){
       alert("Please select Taluka ");
       return;
     }
+    setLoader(true);
     if (permanentPincodeerr) {
+      setLoader(false);
       return alert("Enter valid pincode");
+
     }
-
-    // console.log(mandaliCode.current.value);
-    // return;
-
+  
+    // Prepare the form data
     const data = {
       relation: BanasEmployeeID.current.value,
       title: title.current.value,
       name: firstName.current.value,
       fatherName: middleName.current.value,
       surname: lastName.current.value,
-      // gender: gender.current.value,
       email: email.current.value,
       mobileNumber: Number(mobileNumber.current.value),
       alternateMobileNumber: Number(alternateMobileNumber.current.value),
@@ -371,61 +373,79 @@ function Form() {
           (district.current.value == "Other" && district2.current.value) ||
           district.current.value,
       },
-      // hasFiberInternet: fiber.current.value,
       televisionRecharge: internetConnectionProvider.current.value,
       wifiExpense: wifiExpense.current.value,
       wifiRecharge: wifiRecharge.current.value,
       currentInternetPlanValidity: internetPlanValidity.current.value,
-      // currentInternetPrice: internetPrice.current.value,
-      // currentPlanExpiryDate: internetPlanExpiryDate.current.value,
-
-      // televisionProvider: televisionConnectionProvider.current.value,
-      // televisionPrice: televisionPrice.current.value,
-      // currentTelevisionPlanValidity: televisionPlanValidity.current.value,
-      // currentTelevisionPlanExpiryDate: televisionPlanExpiryDate.current.value,
-      // usesOTT: ott.current.value,
-      // ...(ott.current.value === "true" && { ottUsed: ottUsed.current.value }),
-      // numberOfTVs: tvCount.current.value,
-      // wantsFreeEducationContent: freeEducationContent.current.value,
-      // preferredPlan: preferredPlan.current.value,
-      // preferredPlanPricing: preferredPlanPricing.current.value,
     };
-    console.log(data);
-    fetch(
-      "https://caf-form-server-production-8751.up.railway.app/api/form/post-form",
-      {
+  
+    try {
+      // First API call to get the voucher (token)
+      const authResponse = await fetch("https://caf-form-server-aggzagf5hke8b2d9.southindia-01.azurewebsites.net//api/form/get-form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((response) => {
-        if (response.status == 400) {
-          alert("The Phone number is already registered");
-        } else if (!response.ok) {
-          console.log(response);
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        console.log("Success:", response);
-        if (response.ok) {
-          // If the response is successful, clear the form
-          // alert("Form submitted successfully");
-          setPopup(true);
-          clearHandler(e);
-          setSubmissionSuccess(true);
-
-          // Hide success message after 3 seconds
-          setTimeout(() => setSubmissionSuccess(false), 3000);
-          return response.json();
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+        body: JSON.stringify({
+          userName: "User",
+          password: "user@123",
+        }),
       });
+  
+      if (!authResponse.ok) {
+        alert("Something went wrong");
+        setLoader(false);
+        return;
+      }
+  
+      const authData = await authResponse.json();
+      const voucher = authData.voucher; // Assuming the response contains the token as `voucher`
+  
+      // Second API call to post the form data
+      const formResponse = await fetch(
+        "https://caf-form-server-aggzagf5hke8b2d9.southindia-01.azurewebsites.net//api/form/post-form",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${voucher}`,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+  
+      if (formResponse.status === 400) {
+        alert("The Phone number is already registered");
+        setLoader(false);
+        return;
+      }
+  
+      if (!formResponse.ok) {
+        console.log(formResponse);
+        setLoader(false);
+        throw new Error(`HTTP error! status: ${formResponse.status}`);
+      }
+  
+      console.log("Success:", formResponse);
+      if (formResponse.ok) {
+        // If the response is successful, clear the form
+        setPopup(true);
+        setLoader(false);
+        clearHandler(e);
+        setSubmissionSuccess(true);
+  
+        // Hide success message after 3 seconds
+        setTimeout(() => setSubmissionSuccess(false), 3000);
+  
+        return formResponse.json();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setLoader(false);
+      alert("An error occurred while submitting the form. Please try again.");
+    }
   };
+  
 
   const clearHandler = (e) => {
     e.preventDefault();
@@ -506,7 +526,19 @@ function Form() {
   const [areas, setAreas] = useState([]);
   const [sections, setSections] = useState([]);
   const [popup, setPopup] = useState(false);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mandaliParam = urlParams.get('mandali');
+    const villageParam = urlParams.get('village');
 
+    if (mandaliParam) {
+      mandaliNearAddress.current.value = mandaliParam;
+    }
+
+    if (villageParam) {
+      permanentVillage.current.value = villageParam;
+    }
+  }, []);
   useEffect(() => {
     const today = new Date();
     const maxDate = today.toISOString().split("T")[0]; // Today's date
@@ -808,6 +840,7 @@ function Form() {
 
   return (
     <div className="App w-[90%] md:w-[80%] mx-auto my-[2%] border-x-2 border-b-2 border-[#c0dce4] rounded-[20px]">
+      <Loader load={loader} />
       <div className="background w-[99.5%] mx-auto px-5 py-3 gap-5 flex items-center justify-center  ">
         {/* <img src={logo} alt="logo" className="md:w-[5vw] lg:w-[7vw] w-[15vw]" /> */}
         <img src={desh} alt="logo" className="md:h-[5vh] lg:h-[10vh] h-[5vh]" />
